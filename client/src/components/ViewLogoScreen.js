@@ -53,7 +53,7 @@ class ViewLogoScreen extends Component {
                     </h4>
                     <h3 className="panel-title">View Logo</h3>
                   </div>
-                  <div style={{ backgroundColor: "Lavender", position: "relative", width: 450 }} className="panel-body">
+                  <div style={{ backgroundColor: "#dbdbf0" , position: "relative", width: 450 ,borderStyle: "solid", borderColor: "white", paddingBottom: 17}} className="panel-body">
                     <dl>
                       <dt style={{ fontSize: 23, paddingLeft: 80, paddingTop: 20}} >Text:</dt>
                       <dd style={{ fontSize: 21, paddingLeft: 120}} >{data.logo.text}</dd>
