@@ -42,7 +42,7 @@ class CreateLogoScreen extends Component {
         borderColor: "#000000",
         borderRadius: 0,
         borderWidth: 0,
-        padding: 0,
+        padding: 5,
         margin: 0,
         logoupdate: false
         
