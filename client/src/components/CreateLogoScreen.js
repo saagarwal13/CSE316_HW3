@@ -105,7 +105,7 @@ class CreateLogoScreen extends Component {
                         <div className="panel panel-default">
                             <div className="panel-heading">
                                 <h4><Link to="/">Home 🏠</Link></h4>
-                                <h3 className="panel-title">
+                                <h3 style={{ paddingLeft: 20, fontWeight: "bold"}} className="panel-title">
                                     Create Logo
                             </h3>
                             </div>

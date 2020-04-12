@@ -51,7 +51,7 @@ class ViewLogoScreen extends Component {
                     <h4>
                       <Link to="/">Home 🏠</Link>
                     </h4>
-                    <h3 className="panel-title">View Logo</h3>
+                    <h3 style={{ paddingLeft: 20, fontWeight: "bold"}} className="panel-title">View Logo</h3>
                   </div>
                   <div style={{ backgroundColor: "#dbdbf0" , position: "relative", width: 450 ,borderStyle: "solid", borderColor: "white", paddingBottom: 17}} className="panel-body">
                     <dl>
