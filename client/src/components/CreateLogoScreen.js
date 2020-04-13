@@ -35,7 +35,7 @@ const ADD_LOGO = gql`
 
 class CreateLogoScreen extends Component {
     state = {
-        text: " ",
+        text: "GologoLo ",
         color: "	#000000",
         fontSize: 10,
         backgroundColor: "#000000",

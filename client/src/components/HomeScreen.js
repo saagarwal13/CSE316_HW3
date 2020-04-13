@@ -47,7 +47,7 @@ class HomeScreen extends Component {
                                 
                                 {data.logos.map((logo, index) => (
                                     <div key={index} className='home_logo_link'
-                                        style={{ cursor: "pointer", fontSize: 27, textAlign: "center" }}>
+                                        style={{ cursor: "pointer", fontSize: 27, color: "DarkCyan", textAlign: "center" }}>
                                         <Link to={`/view/${logo._id}`}>{logo.text}</Link>
                                     </div>
                                 ))}
@@ -58,7 +58,7 @@ class HomeScreen extends Component {
                                     Logo Maker
                                 </div>
                                 <div >
-                                    <Link style={{ cursor: "pointer",backgroundColor: "DarkCyan", fontSize: 30,width: "45%",margin: 20,height:66  }} id="add_logo_button" to="/create" className="btn btn-primary btn-lg">Add Logo</Link>
+                                    <Link style={{ cursor: "pointer",alignContent: "center",backgroundColor: "DarkCyan", fontSize: 30,width: "45%",margin: 20,height:66  }} id="add_logo_button" to="/create" className="btn btn-primary btn-lg">Add Logo</Link>
                                 </div>
                             </div>
                         </div>
