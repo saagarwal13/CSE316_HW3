@@ -66,3 +66,86 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+ 
+ //Querying all logos  
+
+{
+  logos 
+  {
+    _id
+    text
+    fontSize
+    color
+    backgroundColor
+    borderWidth
+    padding
+    margin
+    lastUpdate
+    borderRadius  
+  }
+}
+
+ //adding a logo
+
+mutation AddLogo
+        {
+        addLogo(
+            text: "HELLO",
+            color: "#000000",
+            fontSize: 12
+        backgroundColor:"#FF0000" ,
+            borderRadius: 12,
+            borderWidth: 13,
+            borderColor: "#FF0000",
+            padding: 8,
+            margin: 9) {
+            _id
+        }
+    }
+
+ //removing a logo
+
+  mutation {
+  removeLogo (id: "5e8dd394d97ff23c1801180b") {
+    _id
+  }
+}
+
+ //updating a logo
+
+mutation {
+  updateLogo (
+    id: "5e8331b197c9ff377081ee7b",
+    text: "My Dumb Company",
+    color: "#ffeedd",
+    fontSize: 32
+    backgroundColor:"#FF0000" ,
+            borderRadius: 12,
+            borderWidth: 13,
+            borderColor: "#FF0000",
+            padding: 8,
+            margin: 9
+  ) {
+    lastUpdate
+  }
+}
+ 
+
+ //Querying a logo with a specific id 
+
+{
+  logo(id: "5e9480fc9c624a4bd4932146") 
+  {
+    _id
+    text
+    fontSize
+    backgroundColor
+    borderWidth
+    borderColor
+    borderRadius
+    padding
+    margin
+    lastUpdate
+  }
+}

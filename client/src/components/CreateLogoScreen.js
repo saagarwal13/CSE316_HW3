@@ -38,7 +38,7 @@ class CreateLogoScreen extends Component {
         text: "GologoLo ",
         color: "	#000000",
         fontSize: 10,
-        backgroundColor: "#000000",
+        backgroundColor: "#FF0000",
         borderColor: "#000000",
         borderRadius: 0,
         borderWidth: 0,
