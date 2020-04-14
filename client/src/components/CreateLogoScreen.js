@@ -126,55 +126,55 @@ class CreateLogoScreen extends Component {
                                 }}>
                                     <div style={{ align: "middle" }} className="form-group">
                                         <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="text">Text:</label>
-                                        <input style={{ position: "center" }} onChange={this.handleTextChange} style={{ width:400}} type="text"  className="form-control" name="text" ref={node => {
+                                        <input style={{ position: "center" }} onChange={this.handleTextChange} style={{ width:400}} type="text" required className="form-control" name="text" ref={node => {
                                             text = node;
                                         }} placeholder="Text" defaultValue={this.state.text}/>
                                     </div>
                                     <div className="form-group">
                                         <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}}htmlFor="color">Color:</label>
-                                        <input onChange={this.handleTextColorChange} style={{ width:400}} type="color" className="form-control" name="color" ref={node => {
+                                        <input onChange={this.handleTextColorChange} style={{ width:400}} type="color" required className="form-control" name="color" ref={node => {
                                             color = node;
                                         }} placeholder="Color" defaultValue={this.state.color} />
                                     </div>
                                     <div className="form-group">
                                         <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="fontSize">Font Size:</label>
-                                        <input onChange={this.handleFontSizeChange} style={{ width:400}} type="number" min="5" max="200"className="form-control" name="fontSize" ref={node => {
+                                        <input onChange={this.handleFontSizeChange} style={{ width:400}} type="number" required min="5" max="200"className="form-control" name="fontSize" ref={node => {
                                             fontSize = node;
                                         }} placeholder="Font Size" defaultValue={this.state.fontSize} />
                                     </div>
                                     <div className="form-group">
                                         <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="backgroundColor"> Background Color:</label>
-                                        <input onChange={this.handleBackgroundColorChange} style={{ width:400}} type="color" className="form-control" name="backgroundColor" ref={node => {
+                                        <input onChange={this.handleBackgroundColorChange} style={{ width:400}} type="color" required className="form-control" name="backgroundColor" ref={node => {
                                             backgroundColor = node;
                                         }} placeholder="Background color" defaultValue={this.state.backgroundColor}/>
                                     </div>
                                     <div className="form-group">
                                         <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="borderRadius">Border Radius:</label>
-                                        <input onChange={this.handleBorderRadiusChange} style={{ width:400}} type="number" min="0" max="200" className="form-control" name="borderRadius" ref={node => {
+                                        <input onChange={this.handleBorderRadiusChange} style={{ width:400}} type="number" required min="0" max="200" className="form-control" name="borderRadius" ref={node => {
                                             borderRadius = node;
                                         }} placeholder="Border Radius" defaultValue={this.state.borderRadius} />
                                     </div>
                                     <div className="form-group">
                                         <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}}  htmlFor="borderWidth">Border Width:</label>
-                                        <input onChange={this.handleBorderWidthChange}  style={{ width:400}} type="number" min="0" max="200" className="form-control" name="borderWidth" ref={node => {
+                                        <input onChange={this.handleBorderWidthChange}  style={{ width:400}} type="number" required min="0" max="200" className="form-control" name="borderWidth" ref={node => {
                                             borderWidth = node;
                                         }} placeholder="Border Width" defaultValue={this.state.borderWidth} />
                                     </div>
                                     <div className="form-group">
                                         <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}}  htmlFor="borderColor"> Border Color:</label>
-                                        <input onChange={this.handleBorderColorChange} style={{ width:400}} type="color" className="form-control" name="borderColor" ref={node => {
+                                        <input onChange={this.handleBorderColorChange} style={{ width:400}} type="color" required className="form-control" name="borderColor" ref={node => {
                                             borderColor = node;
                                         }} placeholder="Border color" defaultValue={this.state.borderColor} />
                                     </div>
                                     <div className="form-group">
                                         <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}}  htmlFor="padding">Padding:</label>
-                                        <input onChange={this.handlePaddingChange} style={{ width:400}} type="number" min="5" max="200" className="form-control" name="padding" ref={node => {
+                                        <input onChange={this.handlePaddingChange} style={{ width:400}} type="number" required min="5" max="200" className="form-control" name="padding" ref={node => {
                                             padding = node;
                                         }} placeholder="Padding"  defaultValue={this.state.padding} />
                                     </div>
                                     <div className="form-group">
                                         <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}}  htmlFor="margin">Margin:</label>
-                                        <input onChange={this.handleMarginChange}  style={{ width:400}} type="number"  min="0" max="100"className="form-control" name="margin" ref={node => {
+                                        <input onChange={this.handleMarginChange}  style={{ width:400}} type="number" required  min="0" max="100"className="form-control" name="margin" ref={node => {
                                             margin = node;
                                         }} placeholder="Margin" defaultValue={this.state.margin} />
                                     </div>

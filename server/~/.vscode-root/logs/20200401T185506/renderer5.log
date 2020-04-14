@@ -1,0 +1,3 @@
+[2020-04-14 12:07:35.371] [renderer5] [error] [File Watcher (node.js)] Error: ENOENT: no such file or directory, stat '/Users/saraagarwal/Desktop/CSE316HOMEWORKS/CSE316_HW3/gologolo_hw3/server/~/.vscode-root/User'
+[2020-04-14 12:07:36.488] [renderer5] [error] connect ENOENT /Users/saraagarwal/Desktop/CSE316HOMEWORKS/CSE316_HW3/gologolo_hw3/server/~/.vscode-root/1.38.1-shared.sock: Error: connect ENOENT /Users/saraagarwal/Desktop/CSE316HOMEWORKS/CSE316_HW3/gologolo_hw3/server/~/.vscode-root/1.38.1-shared.sock
+    at PipeConnectWrap.afterConnect [as oncomplete] (net.js:1113:14)
