@@ -9,6 +9,18 @@ const GET_LOGO = gql`
         logo(id: $logoId) {
             _id
             text
+            texts
+            {
+                id
+                fontSize
+                title
+                color
+            }
+            images
+            {
+                id
+                url
+            }
             color
             fontSize
             backgroundColor
@@ -17,14 +29,21 @@ const GET_LOGO = gql`
             borderColor
             padding
             margin
+            height
+            width
+            
         }
     }
 `;
+
+
 
 const UPDATE_LOGO = gql`
     mutation updateLogo(
         $id: String!,
         $text: String!,
+        $texts:[LogoText]!,
+        $images:[ImageText]!
         $color: String!,
         $fontSize: Int!,
         $backgroundColor: String!,
@@ -32,10 +51,14 @@ const UPDATE_LOGO = gql`
         $borderWidth: Int!,
         $borderColor: String!
         $padding: Int!,
-        $margin: Int!) {
+        $margin: Int!,
+        $height: Int!,
+        $width: Int!) {
             updateLogo(
                 id: $id,
                 text: $text,
+                texts: $texts,
+                images: $images,           
                 color: $color,
                 fontSize: $fontSize
                 backgroundColor: $backgroundColor
@@ -43,16 +66,22 @@ const UPDATE_LOGO = gql`
                 borderWidth: $borderWidth
                 borderColor: $borderColor
                 padding: $padding
-                margin: $margin) {
+                margin: $margin
+                height: $height
+                width: $width) {
                     lastUpdate
                 }
         }
 `;
 
+
 class EditLogoScreen extends Component {
 
+    
       state = {
         text: "GoLogoLo",
+        texts: [{id:1, title:"GologoLo",fontSize: 50, color:"#FF0000"} ],
+        images : [],
         color: "#FF0000",
         fontSize: 24,
         backgroundColor: "#FF0000",
@@ -61,26 +90,51 @@ class EditLogoScreen extends Component {
         borderWidth: 0,
         padding: 0,
         margin: 0,
+        height: 5,
+        width: 5,
         logoupdate: false,
-        logonew: true
+        logonew: true,
+        focus:0,
+        highestid:100
+        
         
     }
+    
 
 
     handleFontSizeChange = (event) => {
         console.log("handleTextColorChangeComplete to " + event.target.value);
-        this.setState({ fontSize: event.target.value });
+        this.setState({ texts: this.state.texts.map(tex=>{if(tex.id==this.state.focus){
+             tex.fontSize = parseInt(event.target.value)
+        }
+        
+       
+    return tex }), fontSize:event.target.value 
+        
+        });
 
     }
 
     handleTextChange = (event) => {
         console.log("handleTextColorChangeComplete to " + event.target.value);
-        this.setState({ text: event.target.value });
+        this.setState({ texts: this.state.texts.map(tex=>{if(tex.id==this.state.focus){
+             tex.title = event.target.value
+        }
+       
+    return tex }), text: event.target.value
+        
+        });
 
     }
     handleTextColorChange = (event) => {
-        console.log("handleTextColorChange to " + event.target.value);
-        this.setState({ color: event.target.value });
+        console.log("handleTextColorChangeComplete to " + event.target.value);
+        this.setState({ texts: this.state.texts.map(tex=>{if(tex.id==this.state.focus){
+             tex.color = event.target.value
+        }
+        
+    return tex }) ,color: event.target.value
+        
+        });
     }
 
     handleBackgroundColorChange = (event) => {
@@ -107,23 +161,63 @@ class EditLogoScreen extends Component {
     console.log("handleBorderRadius to " + event.target.value);
     this.setState({ margin: event.target.value });
     }
+    handleHeightChange = (event) => {
+        console.log("handleBorderRadius to " + event.target.value);
+        this.setState({ height: event.target.value });
+    }
+    handleWidthChange = (event) => {
+            console.log("handleBorderRadius to " + event.target.value);
+            this.setState({ width: event.target.value });
+    }
+    handleAddText = ()=>
+    {
+        var newhighestid= this.state.highestid + 1
+        const newText = {id:newhighestid, title:"GologoLo",fontSize: 20, color:"#FF0000"}
+        this.setState({highestid:newhighestid})
+        this.setState({texts:[...this.state.texts,newText]})
+      
+    }
+    handleAddImage  = ()=>
+    {
+     
+      
+    }
+    handleRemoveText = ()=>
+    {
+        this.setState({texts:[...this.state.texts.filter(tex=>tex.id!== this.state.focus)]});
+    }
+
+    handleClick=(text)=>
+    {
+        
+        this.setState(state => ({
+            ...state,
+            focus: text.id,fontSize: text.fontSize ,text: text.title,color: text.color
+        }));
+       
+          
+    }
 
 
     render() {
-        let text, color, fontSize, backgroundColor,borderRadius,borderWidth,borderColor,padding,margin;
+        //console.log(this.state)
+        let texts,images, backgroundColor,borderRadius,borderWidth,borderColor,padding,margin,height,width;
         return (
             <Query query={GET_LOGO} variables={{ logoId: this.props.match.params.id }}>
                 {({ loading, error, data }) => {
                     if (loading) return 'Loading...';
                     if (error) return `Error! ${error.message}`;
 
-                    
+                     console.log(data)
                     if (this.state.logoupdate == false )
                     {
                        this.setState({...data.logo, logoupdate: true})
                        
+                       
                     }
                     
+                    data.logo.texts.map(tex => (delete tex.__typename))
+                    delete data.logo.__typename
                     
                     
                     return (
@@ -134,6 +228,12 @@ class EditLogoScreen extends Component {
                                     <div className="panel panel-default">
                                         <div className="panel-heading">
                                             <h4><Link to="/">Home 🏠</Link></h4>
+                                            <div>
+                                           <button style={{ backgroundColor: "darkcyan" ,fontSize: 25}} onClick={this.handleAddText}>Add text</button>
+                                           </div>
+                                           <div>
+                                           <button style={{ backgroundColor: "darkcyan" ,fontSize: 25}} onClick={this.handleRemoveText}>Remove text</button>
+                                           </div>
                                             <h3 style={{ paddingLeft: 20, fontWeight: "bold"}} className="panel-title">
                                                 Edit Logo
                                         </h3>
@@ -141,35 +241,35 @@ class EditLogoScreen extends Component {
                                         <div style={{ backgroundColor: "Lavender", position: "absolute", borderStyle: "solid", borderColor: "white", paddingLeft: 30, paddingRight: 30, paddingTop: 20 }} className="panel-body">                                            
                                             <form onSubmit={e => {
                                                 e.preventDefault();
-                                                updateLogo({ variables: { id: data.logo._id, text: text.value, color: color.value, fontSize: parseInt(fontSize.value),backgroundColor: backgroundColor.value,borderRadius: parseInt(borderRadius.value), borderWidth: parseInt( borderWidth.value), borderColor:borderColor.value,padding: parseInt(padding.value),margin: parseInt(margin.value) } });
-                                                text.value = "";
+                                                updateLogo({ variables: { id: data.logo._id,  text: this.state.text,texts: this.state.texts,images: this.state.images, color:this.state.color, fontSize: parseInt(this.state.fontSize),backgroundColor: backgroundColor.value,borderRadius: parseInt(borderRadius.value), borderWidth: parseInt( borderWidth.value), borderColor:borderColor.value,padding: parseInt(padding.value),margin: parseInt(margin.value),height: parseInt(height.value),width: parseInt(width.value) } });
+                                                //text.value = "";
                                                 
-                                                color.value = "";
-                                                fontSize.value = "";
+                                                //color.value = "";
+                                                //fontSize.value = "";
                                                 backgroundColor.value= "";
                                                 borderRadius.value="";
                                                 borderWidth.value="";
                                                 borderColor.value="";
                                                 padding.value="";
                                                 margin.value="";
+                                                height.value="";
+                                                width.value="";
                                             }}>
                                                 <div className="form-group">
                                                     <label htmlFor="text">Text:</label>
-                                                    <input  onChange={this.handleTextChange} style={{ width:370}}type="text" required className="form-control" name="text" ref={node => {
-                                                        text = node;
-                                                    }} placeholder="Text" defaultValue={data.logo.text} />
+                                                    <input  onChange={this.handleTextChange} style={{ width:370}}type="text" required className="form-control" name="text" 
+                                                     placeholder="Text" value={this.state.text} />
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="color">Color:</label>
-                                                    <input onChange={this.handleTextColorChange} style={{ width:370}} type="color" required className="form-control" name="color" ref={node => {
-                                                        color = node;
-                                                    }} placeholder="Color" defaultValue={data.logo.color} />
+                                                    <input onChange={this.handleTextColorChange} style={{ width:370}} type="color" required className="form-control" name="color" 
+                                                    placeholder="Color"  value={this.state.color} /> 
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="fontSize">Font Size:</label>
-                                                    <input onChange={this.handleFontSizeChange} style={{ width:370}} type= "Number" required min="5" max="200" className="form-control" name="fontSize" ref={node => {
-                                                        fontSize = node;
-                                                    }} placeholder="Font Size" defaultValue={data.logo.fontSize} />
+                                                    <input onChange={this.handleFontSizeChange} style={{ width:370}} type= "Number" required min="5" max="200" className="form-control" name="fontSize" 
+                                                        
+                                                    placeholder="Font Size"  value={this.state.fontSize} /> 
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="backgroundColor">Background Color:</label>
@@ -207,6 +307,18 @@ class EditLogoScreen extends Component {
                                                      margin = node;
                                                    }} placeholder="Margin"  defaultValue={data.logo.margin} />
                                                </div>
+                                               <div className="form-group">
+                                                   <label htmlFor="height">Height:</label>
+                                                  <input onChange={this.handleHeightChange} style={{ width:370}} type="text" required min="5" max="100" className="form-control" name="height" ref={node => {
+                                                   height = node;
+                                                   }} placeholder="Height"  defaultValue={data.logo.height} />
+                                               </div>
+                                               <div className="form-group">
+                                                   <label htmlFor="width">Width:</label>
+                                                  <input onChange={this.handleWidthChange} style={{ width:370}} type="text" required min="5" max="100" className="form-control" name="width" ref={node => {
+                                                    width = node;
+                                                   }} placeholder="Width"  defaultValue={data.logo.width} />
+                                               </div>
                                                 <button style={{ backgroundColor: "darkcyan" ,fontSize: 25}} type="submit" className="btn btn-success">Submit</button>
                                             </form>
                                             {loading && <p>Loading...</p>}
@@ -216,7 +328,7 @@ class EditLogoScreen extends Component {
                                 </div>
                                 <div style={{  position: "absolute" }} className="logopreview">
                                 <TextEditWorkspace 
-                                logo ={this.state} />
+                                logo ={this.state} handleClick={this.handleClick} />
                                 </div>
                              </div>
                             )}

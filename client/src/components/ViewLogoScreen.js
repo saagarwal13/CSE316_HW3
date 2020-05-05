@@ -10,6 +10,19 @@ const GET_LOGO = gql`
     logo(id: $logoId) {
       _id
       text
+      texts {
+        id
+        fontSize
+        title
+        color
+        
+      }
+      images
+      {
+        id
+        url
+      }
+    
       color
       fontSize
       backgroundColor
@@ -18,6 +31,8 @@ const GET_LOGO = gql`
       borderColor
       padding
       margin
+      height
+      width
       lastUpdate
     }
   }
@@ -32,6 +47,11 @@ const DELETE_LOGO = gql`
 `;
 
 class ViewLogoScreen extends Component {
+
+  handleClick=()=>
+  {
+
+  }
   render() {
     return (
       <Query
@@ -57,6 +77,7 @@ class ViewLogoScreen extends Component {
                     <dl>
                       <dt style={{ fontSize: 23, paddingLeft: 80, paddingTop: 20}} >Text:</dt>
                       <dd style={{ fontSize: 21, paddingLeft: 120}} >{data.logo.text}</dd>
+                     
                       <dt style={{ fontSize: 23, paddingLeft: 80}}>Color:</dt>
                       <dd style={{ fontSize: 21, paddingLeft: 120}}>{data.logo.color}</dd>
                       <dt style={{ fontSize: 23, paddingLeft: 80}}>Font Size:</dt>
@@ -108,9 +129,9 @@ class ViewLogoScreen extends Component {
                   </div>
                 </div>
               </div>
-              <div className="logopreview">
+              <div style={{  position: "absolute" }} className="logopreview">
               <TextEditWorkspace 
-               logo ={data.logo} />
+               logo ={data.logo} handleClick= {this.handleClick} />
               </div>
 
               
