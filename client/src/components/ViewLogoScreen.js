@@ -15,12 +15,18 @@ const GET_LOGO = gql`
         fontSize
         title
         color
+        xpos
+        ypos
         
       }
       images
       {
         id
         url
+        xpos
+        ypos
+        height
+        width
       }
     
       color
@@ -49,6 +55,10 @@ const DELETE_LOGO = gql`
 class ViewLogoScreen extends Component {
 
   handleClick=()=>
+  {
+
+  }
+  handleImageClick=()=>
   {
 
   }
@@ -131,7 +141,7 @@ class ViewLogoScreen extends Component {
               </div>
               <div style={{  position: "absolute" }} className="logopreview">
               <TextEditWorkspace 
-               logo ={data.logo} handleClick= {this.handleClick} />
+               logo ={data.logo} handleClick= {this.handleClick} handleImageClick={this.handleImageClick} />
               </div>
 
               

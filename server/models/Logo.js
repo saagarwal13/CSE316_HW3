@@ -15,10 +15,47 @@ var LogoSchema = new mongoose.Schema({
     {
        type: Number, min: 5, max: 200 ,
     },
+    xpos:
+    {
+      type: Number, min: 5, max: 2000 ,
+    },
+    ypos:
+    {
+      type: Number, min: 5, max: 2000 ,
+
+    },
     color:
     {
       type:String
     }
+  }],
+  images:[{
+    id:
+    {
+      type:Number
+    },
+    url:
+    {
+      type:String
+    },
+    xpos:
+    {
+      type: Number, min: 5, max: 2000 ,
+    },
+    ypos:
+    {
+      type: Number, min: 5, max: 2000 ,
+
+    },
+    height:
+    {
+      type: Number, min: 5, max: 500 ,
+    },
+    width:
+    {
+      type: Number, min: 5, max: 500 ,
+
+    },
   }],
  
   color: String,
@@ -29,8 +66,8 @@ var LogoSchema = new mongoose.Schema({
   borderColor:String,
   padding: { type: Number, min: 5, max: 200 },
   margin: { type: Number, min: 0, max: 100 },
-  height: { type: Number, min: 50, max: 100 },
-  width: { type: Number, min: 50, max: 100 },
+  height: { type: Number, min: 50, max: 2000 },
+  width: { type: Number, min: 50, max: 2000 },
   lastUpdate: { type: Date, default: Date.now },
 });
 

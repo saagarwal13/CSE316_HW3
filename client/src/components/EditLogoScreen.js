@@ -14,12 +14,18 @@ const GET_LOGO = gql`
                 id
                 fontSize
                 title
+                xpos
+                ypos
                 color
             }
             images
             {
                 id
                 url
+                xpos
+                ypos
+                height
+                width
             }
             color
             fontSize
@@ -80,7 +86,7 @@ class EditLogoScreen extends Component {
     
       state = {
         text: "GoLogoLo",
-        texts: [{id:1, title:"GologoLo",fontSize: 50, color:"#FF0000"} ],
+        texts: [{id:1, title:"GologoLo",fontSize: 50, color:"#FF0000",xpos:5,ypos:5} ],
         images : [],
         color: "#FF0000",
         fontSize: 24,
@@ -95,7 +101,9 @@ class EditLogoScreen extends Component {
         logoupdate: false,
         logonew: true,
         focus:0,
-        highestid:100
+        highestid:100,
+        urlval:"",
+        highestimgypos:5
         
         
     }
@@ -172,16 +180,33 @@ class EditLogoScreen extends Component {
     handleAddText = ()=>
     {
         var newhighestid= this.state.highestid + 1
-        const newText = {id:newhighestid, title:"GologoLo",fontSize: 20, color:"#FF0000"}
-        this.setState({highestid:newhighestid})
+        var newhighestimgypos= this.state.highestimgypos + 20
+        const newText = {id:newhighestid, title:"GologoLo",fontSize: 20, color:"#FF0000",xpos:20,ypos:newhighestimgypos}
+        this.setState({highestid:newhighestid,highestimgypos:newhighestimgypos})
         this.setState({texts:[...this.state.texts,newText]})
       
     }
     handleAddImage  = ()=>
     {
+      
+        var newhighestid = this.state.highestid + 1
+        const newimg = {id:newhighestid, url: this.state.urlval}
+        this.setState({highestid:newhighestid})
+        this.setState({images:[...this.state.images,newimg]})
      
       
+    } 
+    handleRemoveImage = ()=>
+    {
+        this.setState({images:[...this.state.images.filter(img=>img.id!== this.state.focus)]});
+      
     }
+    handleUrlval=(event)=>
+    {    
+        this.setState({urlval: event.target.value})
+        
+    }
+
     handleRemoveText = ()=>
     {
         this.setState({texts:[...this.state.texts.filter(tex=>tex.id!== this.state.focus)]});
@@ -197,6 +222,34 @@ class EditLogoScreen extends Component {
        
           
     }
+    handleImageClick= (image)=>
+    {
+        this.setState({focus: image.id})
+    }
+
+    handleDrag=(texts)=>
+    {
+        this.setState({texts:texts})
+        console.log("YO")
+        console.log(this.state.texts)
+    }
+
+    handleImageDrag=(images)=>
+    {
+        this.setState({images:images})
+        
+        console.log(this.state)
+    }
+    handleImageResize=(images)=>
+    {
+        this.setState({images:images})
+    }
+
+    setFocus=(text)=>
+    {
+        this.setState({focus:text.id})
+        console.log(text.id)
+    }
 
 
     render() {
@@ -208,16 +261,21 @@ class EditLogoScreen extends Component {
                     if (loading) return 'Loading...';
                     if (error) return `Error! ${error.message}`;
 
-                     console.log(data)
+                     
+                    
                     if (this.state.logoupdate == false )
                     {
-                       this.setState({...data.logo, logoupdate: true})
+                       this.setState({...data.logo, logoupdate: true}, ()=> console.log(this.state))
                        
                        
                     }
+                   
                     
                     data.logo.texts.map(tex => (delete tex.__typename))
+                    
+                    data.logo.images.map(img => (delete img.__typename))
                     delete data.logo.__typename
+                    
                     
                     
                     return (
@@ -234,6 +292,15 @@ class EditLogoScreen extends Component {
                                            <div>
                                            <button style={{ backgroundColor: "darkcyan" ,fontSize: 25}} onClick={this.handleRemoveText}>Remove text</button>
                                            </div>
+
+                                           <label>
+                                Image Url:
+                          <input type="text" value={this.state.urlval} onChange={this.handleUrlval} />
+                          </label>
+                           <button onClick= {this.handleAddImage } />
+                           <div>
+                            <button style={{ backgroundColor: "darkcyan" ,fontSize: 25}} onClick={this.handleRemoveImage}>Remove Image</button>
+                            </div>
                                             <h3 style={{ paddingLeft: 20, fontWeight: "bold"}} className="panel-title">
                                                 Edit Logo
                                         </h3>
@@ -309,13 +376,13 @@ class EditLogoScreen extends Component {
                                                </div>
                                                <div className="form-group">
                                                    <label htmlFor="height">Height:</label>
-                                                  <input onChange={this.handleHeightChange} style={{ width:370}} type="text" required min="5" max="100" className="form-control" name="height" ref={node => {
+                                                  <input onChange={this.handleHeightChange} style={{ width:370}} type="text" required min="50" max="2000" className="form-control" name="height" ref={node => {
                                                    height = node;
                                                    }} placeholder="Height"  defaultValue={data.logo.height} />
                                                </div>
                                                <div className="form-group">
                                                    <label htmlFor="width">Width:</label>
-                                                  <input onChange={this.handleWidthChange} style={{ width:370}} type="text" required min="5" max="100" className="form-control" name="width" ref={node => {
+                                                  <input onChange={this.handleWidthChange} style={{ width:370}} type="text" required min="50" max="2000" className="form-control" name="width" ref={node => {
                                                     width = node;
                                                    }} placeholder="Width"  defaultValue={data.logo.width} />
                                                </div>
@@ -328,7 +395,7 @@ class EditLogoScreen extends Component {
                                 </div>
                                 <div style={{  position: "absolute" }} className="logopreview">
                                 <TextEditWorkspace 
-                                logo ={this.state} handleClick={this.handleClick} />
+                                logo ={this.state} handleClick={this.handleClick} handleImageClick={this.handleImageClick} handleDrag={this.handleDrag} handleImageDrag= {this.handleImageDrag} handleImageResize={this.handleImageResize} setFocus={this.setFocus}/>
                                 </div>
                              </div>
                             )}

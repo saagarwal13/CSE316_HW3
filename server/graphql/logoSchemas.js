@@ -10,7 +10,7 @@ var GraphQLDate = require('graphql-date');
 var LogoModel = require('../models/Logo')
 var GraphQLInputObjectType = require('graphql').GraphQLInputObjectType;
 
-var ImageName = new GraphQLObjectType({
+var imageName = new GraphQLObjectType({
     name: 'ImageName',
     fields: function () {
         return {
@@ -20,6 +20,22 @@ var ImageName = new GraphQLObjectType({
             
             url: {
                 type: GraphQLString
+            },
+            height:
+            {
+                type:GraphQLInt
+            },
+            width:
+            {
+                type:GraphQLInt
+            },
+            xpos:
+            {
+                type:GraphQLInt
+            },
+            ypos:
+            {
+                type:GraphQLInt
             }
            
             
@@ -36,6 +52,22 @@ var ImageType = new GraphQLInputObjectType({
             
             url: {
                 type: GraphQLString
+            },
+            height:
+            {
+                type:GraphQLInt
+            },
+            width:
+            {
+                type:GraphQLInt
+            },
+            xpos:
+            {
+                type:GraphQLInt
+            },
+            ypos:
+            {
+                type:GraphQLInt
             }
            
            
@@ -59,6 +91,17 @@ var textType = new GraphQLInputObjectType({
             fontSize: {
                 type: GraphQLInt
             },
+
+            xpos:
+            {
+                type: GraphQLInt
+            },
+
+            ypos:
+            {
+                type:GraphQLInt
+            },
+
            
             lastUpdate: {
                 type: GraphQLDate
@@ -83,6 +126,15 @@ var textName = new GraphQLObjectType({
             fontSize: {
                 type: GraphQLInt
             },
+            xpos:
+            {
+                type: GraphQLInt
+            },
+
+            ypos:
+            {
+                type:GraphQLInt
+            },
            
             lastUpdate: {
                 type: GraphQLDate
@@ -103,7 +155,7 @@ var logoType = new GraphQLObjectType({
             },
             images:
             {
-                type:GraphQLList(ImageName)
+                type:GraphQLList(imageName)
 
             },
            

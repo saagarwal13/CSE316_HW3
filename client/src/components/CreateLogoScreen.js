@@ -46,24 +46,27 @@ const ADD_LOGO = gql`
 
 class CreateLogoScreen extends Component {
     state = {
-        texts: [{id:1, title:"GologoLo",fontSize: 20, color:"#FF0000"} ],
+        texts: [{id:1, title:"GologoLo",fontSize: 20, color:"#FF0000",xpos:5,ypos:5} ],
         images:[],
         text: "GologoLo ",
         color: "	#000000",
         fontSize: 10,
-        backgroundColor: "#FF0000",
+        backgroundColor: "#000000",
         borderColor: "#000000",
         borderRadius: 0,
         borderWidth: 0,
         padding: 5,
         margin: 0,
-        height: 50,
-        width: 50,
+        height: 500,
+        width: 500,
         logoupdate: false,
         focus: 0,
         highestid: 1,
-        highestimgid:0,
-        urlval: ""
+        highestimgid:1,
+        urlval: "",
+        highestypos:5,
+        highestimgypos:5
+
         
     }
 
@@ -132,23 +135,29 @@ class CreateLogoScreen extends Component {
     }
     handleAddText = (event) => {
          var newhighestid= this.state.highestid + 1
-        const newText = {id:newhighestid, title:"GologoLo",fontSize: 20, color:"#FF0000"}
-        this.setState({highestid:newhighestid})
-        this.setState({texts:[...this.state.texts,newText]})
+         var newhighestypos= this.state.highestypos + 20
+
+        const newText = {id:newhighestid, title:"GologoLo",fontSize: 20, color:"#FF0000", xpos: 5, ypos: newhighestypos}
+        this.setState({highestid:newhighestid,highestypos: newhighestypos})
+        
+        this.setState({texts:[...this.state.texts,newText] },()=>console.log(this.state))
     }
-    handleAddImage = (event) =>
+    handleAddImage = () =>
     {
-        console.log(" handle add image")
-        var newhighestimgid = this.state.highestimgid + 1
-        const newimg = {id:newhighestimgid, url: this.state.urlval}
-        this.setState({highestimgid:newhighestimgid})
+        
+        var newhighestid = this.state.highestid + 1
+        var newhighestimgypos= this.state.highestimgypos + 20
+        const newimg = {id:newhighestid, url: this.state.urlval,height:20, width:20,xpos:5,ypos:newhighestimgypos}
+        this.setState({highestid:newhighestid,highestimgypos: newhighestimgypos})
         this.setState({images:[...this.state.images,newimg]})
-
-        
-        
-
-
     }
+    handleRemoveImage = ()=>
+    {
+        this.setState({images:[...this.state.images.filter(img=>img.id!== this.state.focus)]});
+        console.log("YO")
+    }
+
+
     handleUrlval=(event)=>
     {    console.log(" url ")
         this.setState({urlval: event.target.value})
@@ -157,17 +166,36 @@ class CreateLogoScreen extends Component {
     handleRemoveText = ()=>
     {
         this.setState({texts:[...this.state.texts.filter(tex=>tex.id!== this.state.focus)]});
+        
     }
     handleClick=(text)=>
     {
         this.setState(state => ({
             ...state,
             focus: text.id,fontSize: text.fontSize ,text: text.title,color: text.color
-        }));
-        
-    
+        }));      
+    }
+    handleImageClick= (image)=>
+    {
+        this.setState({focus: image.id})
+    }
+
+    handleDrag=(texts)=>
+    {
         
     }
+
+    handleImageDrag=(images)=>
+    {
+        console.log(images)
+        this.setState({images:images})
+    }
+    handleImageResize=(images)=>
+    {
+        this.setState({images:images})
+    }
+
+
 
 
     render() {
@@ -198,6 +226,9 @@ class CreateLogoScreen extends Component {
                           <input type="text" value={this.state.urlval} onChange={this.handleUrlval} />
                           </label>
                            <button onClick= {this.handleAddImage } />
+                           <div>
+                            <button style={{ backgroundColor: "darkcyan" ,fontSize: 25}} onClick={this.handleRemoveImage}>Remove Image</button>
+                            </div>
   
                             
 
@@ -283,13 +314,13 @@ class CreateLogoScreen extends Component {
                                     </div>
                                     <div className="form-group">
                                         <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}}  htmlFor="height">Height:</label>
-                                        <input onChange={this.handleHeightChange}  style={{ width:400}} type="number" required  min="50" max="100"className="form-control" name="height" ref={node => {
+                                        <input onChange={this.handleHeightChange}  style={{ width:400}} type="number" required  min="50" max="2000"className="form-control" name="height" ref={node => {
                                             height = node;
                                         }} placeholder="Height" defaultValue={this.state.height} />
                                     </div>
                                     <div className="form-group">
                                         <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}}  htmlFor="width">Width:</label>
-                                        <input onChange={this.handleWidthChange}  style={{ width:400}} type="number" required  min="50" max="100"className="form-control" name="width" ref={node => {
+                                        <input onChange={this.handleWidthChange}  style={{ width:400}} type="number" required  min="50" max="2000"className="form-control" name="width" ref={node => {
                                             width = node;
                                         }} placeholder="Width" defaultValue={this.state.width} />
                                     </div>
@@ -302,9 +333,9 @@ class CreateLogoScreen extends Component {
                             </div>
                         </div>
                     </div>
-                    <div   className="logopreview">
+                    <div  style={{  position: "absolute" }}  className="logopreview">
                          <TextEditWorkspace 
-                        logo ={this.state} handleClick={this.handleClick} />
+                        logo ={this.state} handleClick={this.handleClick} handleImageClick={this.handleImageClick} handleDrag={this.handleDrag} handleImageDrag={this.handleImageDrag} handleImageResize={this.handleImageResize}/>
                     </div>
                 </div>
                 )}
