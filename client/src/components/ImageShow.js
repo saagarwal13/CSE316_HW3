@@ -17,13 +17,7 @@ class   ImageShow extends Component {
     
         
         let images = this.props.images.map(img => img.id===this.props.focus? {...img,ypos:data.y,xpos: data.x} :img)
-        /*{
-            if (img.id === this.props.focus) {
-                img.ypos = parseInt(data.y);
-                img.xpos = parseInt(data.x);
-            }
-            return img
-        });*/
+            
         
         this.props.handleImageDrag( images)
            

@@ -232,6 +232,12 @@ class EditLogoScreen extends Component {
         this.setState({texts:texts})
         console.log("YO")
         console.log(this.state.texts)
+         this.state.texts.map(tex=>{if(tex.id==this.state.focus){
+            console.log(tex.xpos)
+            console.log(tex.ypos)
+       }
+      
+   })
     }
 
     handleImageDrag=(images)=>

@@ -4,6 +4,7 @@ import "../App.css";
 import gql from "graphql-tag";
 import { Query, Mutation } from "react-apollo";
 import  TextEditWorkspace   from "./TextEditWorkspace.js";
+ import html2canvas from 'html2canvas';
 
 const GET_LOGO = gql`
   query logo($logoId: String) {
@@ -62,6 +63,21 @@ class ViewLogoScreen extends Component {
   {
 
   }
+  handleDownload=()=>
+  {
+    //html2canvas(document.querySelector("#capture")).then(canvas => {
+      //document.body.appendChild(canvas)
+      const input = document.getElementById('capture');
+      html2canvas(input)
+        .then((canvas) => {
+          const imgData = canvas.toDataURL('image/png');
+
+          window.open(imgData , "_blank");
+        })
+      ;
+ 
+
+  }
   render() {
     return (
       <Query
@@ -81,6 +97,9 @@ class ViewLogoScreen extends Component {
                     <h4>
                       <Link to="/">Home 🏠</Link>
                     </h4>
+                    <button onClick={this.handleDownload} style={{ fontSize: 25}}  className="btn btn-danger">
+                              Download Logo
+                    </button>
                     <h3 style={{ paddingLeft: 20, fontWeight: "bold"}} className="panel-title">View Logo</h3>
                   </div>
                   <div style={{ backgroundColor: "#dbdbf0" , position: "relative", width: 450 ,borderStyle: "solid", borderColor: "white", paddingBottom: 17}} className="panel-body">
@@ -139,9 +158,9 @@ class ViewLogoScreen extends Component {
                   </div>
                 </div>
               </div>
-              <div style={{  position: "absolute" }} className="logopreview">
+              <div  style={{  position: "absolute" }} className="logopreview">
               <TextEditWorkspace 
-               logo ={data.logo} handleClick= {this.handleClick} handleImageClick={this.handleImageClick} />
+               logo ={data.logo} handleClick= {this.handleClick} handleImageClick={this.handleImageClick} handleDownload={this.handleDownload} />
               </div>
 
               

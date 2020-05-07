@@ -173,7 +173,9 @@ class CreateLogoScreen extends Component {
         this.setState(state => ({
             ...state,
             focus: text.id,fontSize: text.fontSize ,text: text.title,color: text.color
-        }));      
+        }));  
+        
+        
     }
     handleImageClick= (image)=>
     {
@@ -182,6 +184,7 @@ class CreateLogoScreen extends Component {
 
     handleDrag=(texts)=>
     {
+        this.setState({texts:texts})
         
     }
 
@@ -193,6 +196,11 @@ class CreateLogoScreen extends Component {
     handleImageResize=(images)=>
     {
         this.setState({images:images})
+    }
+    setFocus=(text)=>
+    {
+        this.setState({focus:text.id})
+        console.log(text.id)
     }
 
 

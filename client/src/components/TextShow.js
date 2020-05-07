@@ -24,7 +24,7 @@ class TextShow extends Component {
 
 
         
-        this.props.setFocus(this.props.text)  
+        
 
         let texts = this.props.texts.map(tex => tex.id===this.props.focus? {...tex,ypos:data.y,xpos: data.x} :tex)
 
@@ -36,7 +36,7 @@ class TextShow extends Component {
             }
         });*/
          
-        this.props.handleDrag(texts)
+        //this.props.handleDrag(texts)
            
         
     }
