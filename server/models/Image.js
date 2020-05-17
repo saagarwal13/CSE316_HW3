@@ -6,8 +6,8 @@ var ImageSchema = new mongoose.Schema({
   height: { type: Number, min: 5, max: 500 },
   width:{ type: Number, min: 5, max: 500 },
   
-  xpos: { type: Number, min: 5, max: 2000 },
-  ypos:{ type: Number, min: 5, max: 2000 },
+  xpos: { type: Number, min: 0, max: 2000 },
+  ypos:{ type: Number, min: 0, max: 2000 },
   
   
 });

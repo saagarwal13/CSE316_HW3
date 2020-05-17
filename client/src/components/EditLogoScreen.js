@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import gql from "graphql-tag";
 import { Query, Mutation } from "react-apollo";
 import  TextEditWorkspace   from "./TextEditWorkspace.js";
+import domtoimage from 'dom-to-image';
 
 const GET_LOGO = gql`
     query logo($logoId: String) {
@@ -281,6 +282,28 @@ class EditLogoScreen extends Component {
        });
 
     }
+    handleDownload=()=>
+  {
+    //html2canvas(document.querySelector("#capture")).then(canvas => {
+      //document.body.appendChild(canvas)
+
+     /* const input = document.getElementById('capture');
+      html2canvas(input)
+        .then((canvas) => {
+          const imgData = canvas.toDataURL('image/png');
+
+          window.open(imgData , "_blank");
+        })
+      ;*/
+      domtoimage.toJpeg(document.getElementById('capture'), { quality: 0.95 })
+    .then(function (dataUrl) {
+        var link = document.createElement('a');
+        link.download = 'my-image-name.jpeg';
+        link.href = dataUrl;
+        link.click();
+    });
+
+  }
  
 
     render() {
@@ -317,13 +340,16 @@ class EditLogoScreen extends Component {
                                     <div className="panel panel-default">
                                         <div className="panel-heading">
                                             <h4><Link to="/">Home 🏠</Link></h4>
-                                            <h3 style={{ paddingLeft: 20, paddingTop:10, fontWeight: "bold", marginLeft:110}} className="panel-title">
+                                            <h3 style={{ paddingLeft: 20, paddingTop:10, fontWeight: "bold", marginLeft:170 , fontStyle: "italic"}} className="panel-title">
                                     Edit Logo
                                     
                             </h3>
+                            <button onClick={this.handleDownload} style={{ fontSize: 25}}  className="btn btn-danger">
+                              Download Logo
+                             </button>
 
 
-                          <div  style={{backgroundColor: "thistle",borderStyle: "solid", borderRadius:25, borderColor: "white", paddingLeft: 30, paddingRight: 30,paddingTop: 20,paddingBottom:30}}>
+                          <div  style={{backgroundColor: "thistle",borderStyle: "solid", borderRadius:25, borderColor: "white", paddingLeft: 30, paddingRight: 30,paddingTop: 7,paddingBottom:7,width:500}}>
                             <div style={{marginLeft: 20}}>
                               <button style={{ backgroundColor: "darkcyan" ,fontSize: 20 }} onClick={this.handleAddText}>Add text</button>
                               <button style={{ backgroundColor: "darkcyan" ,fontSize: 20,marginLeft: 180}} onClick={this.handleRemoveText}>Remove text</button>     
@@ -336,7 +362,8 @@ class EditLogoScreen extends Component {
                          
                           </div>
 
-                          <div style={{backgroundColor: "thistle",borderStyle: "solid", borderColor: "white", borderRadius:25, paddingLeft: 15, paddingRight:5,paddingTop: 20,paddingBottom:30,width:500}}>
+                          <div style={{backgroundColor: "thistle",borderStyle: "solid", borderColor: "white", borderRadius:25, paddingLeft: 15, paddingRight:5,width:500}}>
+                          <h3 style={{fontWeight: "bold" , fontStyle: "italic", fontSize: 20, marginLeft:180, marginTop:15}}>Image Controls</h3>
                           <form class="range-field my-4 w-25">
                           <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="text"> Image Height:</label>
                          <input onChange={this.handleImageHeight} value={this.state.imageHeight} type="range" min="5" max="400" />
@@ -350,6 +377,24 @@ class EditLogoScreen extends Component {
 
 
                           </div>
+                          <div style={{backgroundColor: "thistle",borderStyle: "solid", borderColor: "white", borderRadius:25, paddingLeft: 15, paddingRight:5,paddingTop: 20,paddingBottom:30,width:500}}>
+                          <h3 style={{fontWeight: "bold" , fontStyle: "italic", fontSize: 20, marginLeft:170}}>Text Controls</h3>
+                <div style={{ align: "middle" }} >
+                                        <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="text">Text:</label>
+                                        <input style={{ position: "center" }} onChange={this.handleTextChange} style={{ width:400}} type="text" required className="form-control" name="text" 
+                                            placeholder="Text" value={this.state.text}/>
+                                    </div>
+                                    <div >
+                                        <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}}htmlFor="color">Color:</label>
+                                        <input onChange={this.handleTextColorChange} style={{ width:400}} type="color" required className="form-control" name="color" 
+                                         placeholder="Color" value={this.state.color} />
+                                    </div>
+                                    <div >
+                                        <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="fontSize">Font Size:</label>
+                                        <input onChange={this.handleFontSizeChange} style={{ width:400}} type="number" required min="5" max="200"className="form-control" name="fontSize" 
+                                             placeholder="Font Size" value={this.state.fontSize} />
+                                    </div>
+                </div>
                                         </div>
                                         <div style={{ backgroundColor: "Lavender", position: "absolute", marginLeft:50, borderStyle: "solid", borderColor: "white", paddingLeft: 30, paddingRight: 30, paddingTop: 20 }} className="panel-body">                                            
                                             <form onSubmit={e => {
@@ -368,22 +413,7 @@ class EditLogoScreen extends Component {
                                                 height.value="";
                                                 width.value="";
                                             }}>
-                                                <div className="form-group">
-                                                    <label htmlFor="text">Text:</label>
-                                                    <input  onChange={this.handleTextChange} style={{ width:370}}type="text" required className="form-control" name="text" 
-                                                     placeholder="Text" value={this.state.text} />
-                                                </div>
-                                                <div className="form-group">
-                                                    <label htmlFor="color">Color:</label>
-                                                    <input onChange={this.handleTextColorChange} style={{ width:370}} type="color" required className="form-control" name="color" 
-                                                    placeholder="Color"  value={this.state.color} /> 
-                                                </div>
-                                                <div className="form-group">
-                                                    <label htmlFor="fontSize">Font Size:</label>
-                                                    <input onChange={this.handleFontSizeChange} style={{ width:370}} type= "Number" required min="5" max="200" className="form-control" name="fontSize" 
-                                                        
-                                                    placeholder="Font Size"  value={this.state.fontSize} /> 
-                                                </div>
+                                                
                                                 <div className="form-group">
                                                     <label htmlFor="backgroundColor">Background Color:</label>
                                                     <input onChange={this.handleBackgroundColorChange} style={{ width:370}} type="color" required className="form-control" name="backgroundColor" ref={node => {
@@ -439,7 +469,9 @@ class EditLogoScreen extends Component {
                                         </div>
                                     </div>
                                 </div>
+                            
                                 <div style={{  position: "absolute" }} className="logopreview">
+                             
                                 <TextEditWorkspace 
                                 logo ={this.state} handleClick={this.handleClick} handleImageClick={this.handleImageClick} handleDrag={this.handleDrag} handleImageDrag= {this.handleImageDrag} handleImageResize={this.handleImageResize} removeFocus={this.removeFocus} setFocus={this.setFocus}/>
                                 </div>

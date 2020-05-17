@@ -256,41 +256,60 @@ class CreateLogoScreen extends Component {
                     <div id="logoinfo" className="container">
                         <div className="panel panel-default">
                             <div className="panel-heading">
-                                <h4><Link to="/">Home 🏠</Link></h4>
+                                <h4 style={{fontWeight: "bold", fontStyle: "italic"}}><Link to="/">Home 🏠</Link></h4>
 
-                                <h3 style={{ paddingLeft: 20, paddingTop:10, fontWeight: "bold", marginLeft:110}} className="panel-title">
+                                <h3 style={{ paddingLeft: 20, fontWeight: "bold", fontStyle: "italic",marginLeft:160}} className="panel-title">
                                     Create Logo
                                     
                             </h3>
 
-                          <div  style={{backgroundColor: "thistle",borderStyle: "solid", borderColor: "white", borderRadius:25, paddingLeft: 15, paddingRight:5,paddingTop: 20,paddingBottom:30,width:500}}>
+                          <div  style={{backgroundColor: "thistle",borderStyle: "solid", borderColor: "white", borderRadius:25, paddingLeft: 15, paddingRight:5,paddingTop: 10,paddingBottom:10,width:500}}>
                             <div style={{marginLeft: 20}}>
-                              <button style={{ backgroundColor: "darkcyan" ,fontSize: 20 }} onClick={this.handleAddText}>Add text</button>
-                              <button style={{ backgroundColor: "darkcyan" ,fontSize: 20,marginLeft: 180}} onClick={this.handleRemoveText}>Remove text</button>     
+                              <button style={{ backgroundColor: "darkcyan" ,fontSize: 18,borderRadius:5 }} onClick={this.handleAddText}>Add text</button>
+                              <button style={{ backgroundColor: "darkcyan" ,fontSize: 18,marginLeft: 180,borderRadius:5}} onClick={this.handleRemoveText}>Remove text</button>     
                             </div>
                             <div style={{marginLeft: 20, marginTop:10}}>
-                                <button style={{ backgroundColor: "darkcyan" ,fontSize: 20}} onClick={this.handleAddImage}>Add Image</button>
+                                <button style={{ backgroundColor: "darkcyan" ,fontSize: 18,borderRadius:2}} onClick={this.handleAddImage}>Add Image</button>
                                 <input type="text" value={this.state.urlval} onChange={this.handleUrlval} style={{width:100}}placeholder = "Enter URL" />
-                                <button style={{ backgroundColor: "darkcyan" ,fontSize: 20, marginLeft:50}} onClick={this.handleRemoveImage}>Remove Image</button>     
+                                <button style={{ backgroundColor: "darkcyan" ,fontSize: 18, marginLeft:50,borderRadius:5}} onClick={this.handleRemoveImage}>Remove Image</button>     
                          </div>
                           </div>
 
-                          <div style={{backgroundColor: "thistle",borderStyle: "solid", borderColor: "white", borderRadius:25, paddingLeft: 15, paddingRight:5,paddingTop: 20,paddingBottom:30,width:500}}>
+                          <div style={{backgroundColor: "thistle",borderStyle: "solid", borderColor: "white", borderRadius:25, paddingLeft: 15, paddingRight:5,width:500}}>
+                              <h3 style={{fontWeight: "bold" , fontStyle: "italic", fontSize: 20, marginLeft:170, marginTop:15}}>Image Controls</h3>
                           <form class="range-field my-4 w-25">
-                          <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="text"> Image Height:</label>
+                              <div>
+                              <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="text"> Image Height:</label>
                          <input onChange={this.handleImageHeight} value={this.state.imageHeight} type="range" min="5" max="400" />
+
+                              </div>
+                         
                         </form>
 
                         <form class="range-field my-4 w-25">
                         <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="text"> Image Width:</label>
                          <input onChange={this.handleImageWidth} value={this.state.imageWidth} type="range" min="0" max="400"   />
                         </form>
-
-
-
                           </div>
                                
-                
+                <div style={{backgroundColor: "thistle",borderStyle: "solid", borderColor: "white", borderRadius:25, paddingLeft: 15, paddingRight:5,paddingTop: 20,paddingBottom:30,width:500}}>
+                <h3 style={{fontWeight: "bold" , fontStyle: "italic", fontSize: 20, marginLeft:170}}>Text Controls</h3>
+                <div style={{ align: "middle" }} >
+                                        <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="text">Text:</label>
+                                        <input style={{ position: "center" }} onChange={this.handleTextChange} style={{ width:400}} type="text" required className="form-control" name="text" 
+                                            placeholder="Text" value={this.state.text}/>
+                                    </div>
+                                    <div >
+                                        <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}}htmlFor="color">Color:</label>
+                                        <input onChange={this.handleTextColorChange} style={{ width:400}} type="color" required className="form-control" name="color" 
+                                         placeholder="Color" value={this.state.color} />
+                                    </div>
+                                    <div >
+                                        <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="fontSize">Font Size:</label>
+                                        <input onChange={this.handleFontSizeChange} style={{ width:400}} type="number" required min="5" max="200"className="form-control" name="fontSize" 
+                                             placeholder="Font Size" value={this.state.fontSize} />
+                                    </div>
+                </div>
 
 
                             </div>
@@ -317,21 +336,7 @@ class CreateLogoScreen extends Component {
                                     
                                    
                                 }}>
-                                    <div style={{ align: "middle" }} className="form-group">
-                                        <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="text">Text:</label>
-                                        <input style={{ position: "center" }} onChange={this.handleTextChange} style={{ width:400}} type="text" required className="form-control" name="text" 
-                                            placeholder="Text" value={this.state.text}/>
-                                    </div>
-                                    <div className="form-group">
-                                        <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}}htmlFor="color">Color:</label>
-                                        <input onChange={this.handleTextColorChange} style={{ width:400}} type="color" required className="form-control" name="color" 
-                                         placeholder="Color" value={this.state.color} />
-                                    </div>
-                                    <div className="form-group">
-                                        <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="fontSize">Font Size:</label>
-                                        <input onChange={this.handleFontSizeChange} style={{ width:400}} type="number" required min="5" max="200"className="form-control" name="fontSize" 
-                                             placeholder="Font Size" value={this.state.fontSize} />
-                                    </div>
+                                    
                                     <div className="form-group">
                                         <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="backgroundColor"> Background Color:</label>
                                         <input onChange={this.handleBackgroundColorChange} style={{ width:400}} type="color" required className="form-control" name="backgroundColor" ref={node => {
