@@ -159,8 +159,7 @@ class ViewLogoScreen extends Component {
                 </div>
               </div>
               <div  style={{  position: "absolute" }} className="logopreview">
-              <TextEditWorkspace 
-               logo ={data.logo} handleClick= {this.handleClick} handleImageClick={this.handleImageClick} handleDownload={this.handleDownload} />
+              
               </div>
 
               
@@ -173,3 +172,6 @@ class ViewLogoScreen extends Component {
 }
 
 export default ViewLogoScreen;
+
+//<TextEditWorkspace 
+//logo ={data.logo} handleClick= {this.handleClick} handleImageClick={this.handleImageClick} handleDownload={this.handleDownload} />

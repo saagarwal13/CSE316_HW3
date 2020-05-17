@@ -1,4 +1,8 @@
 var express = require('express');
+var passport = require('passport');
+var facebookStrategy = require('passport-facebook')
+
+
 var router = express.Router();
 
 /* GET home page. */

@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import TextShow from "./TextShow.js";
 import ImageShow from "./ImageShow.js";
+import { Rnd } from 'react-rnd';
 
 // THIS IS HOW WE DISPLAY THE LOGO, IN THIS COMPONENT
 class TextEditWorkspace extends Component {
     
+
+
    
 
    
@@ -31,13 +34,11 @@ class TextEditWorkspace extends Component {
         return (
             <div id="capture" className="col s8"
                 style={ styles.container }>
-                
-                {this.props.logo.texts.map((tex)=>(<TextShow  text={tex} texts={this.props.logo.texts} focus={this.props.logo.focus}  handleClick={this.props.handleClick} handleDrag={this.props.handleDrag} setFocus={this.props.setFocus} />))}
-                {this.props.logo.images.map((image)=>(<ImageShow  image={image} images={this.props.logo.images} focus={this.props.logo.focus} handleImageClick={this.props.handleImageClick} handleImageDrag={this.props.handleImageDrag} handleImageResize= {this.props.handleImageResize}  />))}
 
-                
-
-                
+       {this.props.logo.texts.map((tex)=>(<TextShow  text={tex} texts={this.props.logo.texts} focus={this.props.logo.focus}  handleClick={this.props.handleClick} handleDrag={this.props.handleDrag} setFocus={this.props.setFocus} />))}
+       {this.props.logo.images.map((image)=>(<ImageShow  image={image} images={this.props.logo.images} focus={this.props.logo.focus} handleImageClick={this.props.handleImageClick} handleImageDrag={this.props.handleImageDrag} handleImageResize= {this.props.handleImageResize}  />))}
+                     
+                 
 
                
             </div>
@@ -46,5 +47,4 @@ class TextEditWorkspace extends Component {
 }
 
 export default TextEditWorkspace
-//{this.props.logo.texts.map((tex)=>(<TextShow  text={tex} texts={this.props.logo.texts} focus={this.props.logo.focus}  handleClick={this.props.handleClick} handleDrag={this.props.handleDrag} setFocus={this.props.setFocus} />))}
-                //{this.props.logo.images.map((image)=>(<ImageShow  image={image} images={this.props.logo.images} focus={this.props.logo.focus} handleImageClick={this.props.handleImageClick} handleImageDrag={this.props.handleImageDrag} handleImageResize= {this.props.handleImageResize}  />))}
+

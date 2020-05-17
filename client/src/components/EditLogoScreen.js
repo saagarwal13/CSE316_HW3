@@ -103,7 +103,9 @@ class EditLogoScreen extends Component {
         focus:0,
         highestid:100,
         urlval:"",
-        highestimgypos:5
+        highestimgypos:5,
+        imageHeight:5,
+        imageWidth:5
         
         
     }
@@ -189,9 +191,12 @@ class EditLogoScreen extends Component {
     handleAddImage  = ()=>
     {
       
+     
+
         var newhighestid = this.state.highestid + 1
-        const newimg = {id:newhighestid, url: this.state.urlval}
-        this.setState({highestid:newhighestid})
+        var newhighestimgypos= this.state.highestimgypos + 20
+        const newimg = {id:newhighestid, url: this.state.urlval,height:80, width:80,xpos:5,ypos:newhighestimgypos}
+        this.setState({highestid:newhighestid,highestimgypos: newhighestimgypos})
         this.setState({images:[...this.state.images,newimg]})
      
       
@@ -214,11 +219,11 @@ class EditLogoScreen extends Component {
 
     handleClick=(text)=>
     {
-        
-        this.setState(state => ({
-            ...state,
-            focus: text.id,fontSize: text.fontSize ,text: text.title,color: text.color
-        }));
+        console.log("changing focus")
+        this.setState( {
+            
+            focus: text.id,fontSize: text.fontSize ,text:text.title,color:text.color
+        });
        
           
     }
@@ -256,7 +261,27 @@ class EditLogoScreen extends Component {
         this.setState({focus:text.id})
         console.log(text.id)
     }
+    handleImageHeight=(event)=>
+    {
+        this.setState({ images: this.state.images.map(imge=>{if(imge.id==this.state.focus){
+            imge.height = parseInt(event.target.value)
+       }
+   return imge }),imageHeight:event.target.value
+       
+       });
 
+    }
+    handleImageWidth=(event)=>
+    {
+        this.setState({ images: this.state.images.map(imge=>{if(imge.id==this.state.focus){
+            imge.width = parseInt(event.target.value)
+       }
+   return imge }),imageWidth:event.target.value
+       
+       });
+
+    }
+ 
 
     render() {
         //console.log(this.state)
@@ -292,26 +317,41 @@ class EditLogoScreen extends Component {
                                     <div className="panel panel-default">
                                         <div className="panel-heading">
                                             <h4><Link to="/">Home 🏠</Link></h4>
-                                            <div>
-                                           <button style={{ backgroundColor: "darkcyan" ,fontSize: 25}} onClick={this.handleAddText}>Add text</button>
-                                           </div>
-                                           <div>
-                                           <button style={{ backgroundColor: "darkcyan" ,fontSize: 25}} onClick={this.handleRemoveText}>Remove text</button>
-                                           </div>
+                                            <h3 style={{ paddingLeft: 20, paddingTop:10, fontWeight: "bold", marginLeft:110}} className="panel-title">
+                                    Edit Logo
+                                    
+                            </h3>
 
-                                           <label>
-                                Image Url:
-                          <input type="text" value={this.state.urlval} onChange={this.handleUrlval} />
-                          </label>
-                           <button onClick= {this.handleAddImage } />
-                           <div>
-                            <button style={{ backgroundColor: "darkcyan" ,fontSize: 25}} onClick={this.handleRemoveImage}>Remove Image</button>
+
+                          <div  style={{backgroundColor: "thistle",borderStyle: "solid", borderRadius:25, borderColor: "white", paddingLeft: 30, paddingRight: 30,paddingTop: 20,paddingBottom:30}}>
+                            <div style={{marginLeft: 20}}>
+                              <button style={{ backgroundColor: "darkcyan" ,fontSize: 20 }} onClick={this.handleAddText}>Add text</button>
+                              <button style={{ backgroundColor: "darkcyan" ,fontSize: 20,marginLeft: 180}} onClick={this.handleRemoveText}>Remove text</button>     
                             </div>
-                                            <h3 style={{ paddingLeft: 20, fontWeight: "bold"}} className="panel-title">
-                                                Edit Logo
-                                        </h3>
+                            <div style={{marginLeft: 20, marginTop:10}}>
+                                <button style={{ backgroundColor: "darkcyan" ,fontSize: 20}} onClick={this.handleAddImage}>Add Image</button>
+                                <input type="text" value={this.state.urlval} onChange={this.handleUrlval} style={{width:100}}placeholder = "Enter URL" />
+                                <button style={{ backgroundColor: "darkcyan" ,fontSize: 20, marginLeft:50}} onClick={this.handleRemoveImage}>Remove Image</button>     
+                         </div>
+                         
+                          </div>
+
+                          <div style={{backgroundColor: "thistle",borderStyle: "solid", borderColor: "white", borderRadius:25, paddingLeft: 15, paddingRight:5,paddingTop: 20,paddingBottom:30,width:500}}>
+                          <form class="range-field my-4 w-25">
+                          <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="text"> Image Height:</label>
+                         <input onChange={this.handleImageHeight} value={this.state.imageHeight} type="range" min="5" max="400" />
+                        </form>
+
+                        <form class="range-field my-4 w-25">
+                        <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="text"> Image Width:</label>
+                         <input onChange={this.handleImageWidth} value={this.state.imageWidth} type="range" min="0" max="400"   />
+                        </form>
+
+
+
+                          </div>
                                         </div>
-                                        <div style={{ backgroundColor: "Lavender", position: "absolute", borderStyle: "solid", borderColor: "white", paddingLeft: 30, paddingRight: 30, paddingTop: 20 }} className="panel-body">                                            
+                                        <div style={{ backgroundColor: "Lavender", position: "absolute", marginLeft:50, borderStyle: "solid", borderColor: "white", paddingLeft: 30, paddingRight: 30, paddingTop: 20 }} className="panel-body">                                            
                                             <form onSubmit={e => {
                                                 e.preventDefault();
                                                 updateLogo({ variables: { id: data.logo._id,  text: this.state.text,texts: this.state.texts,images: this.state.images, color:this.state.color, fontSize: parseInt(this.state.fontSize),backgroundColor: backgroundColor.value,borderRadius: parseInt(borderRadius.value), borderWidth: parseInt( borderWidth.value), borderColor:borderColor.value,padding: parseInt(padding.value),margin: parseInt(margin.value),height: parseInt(height.value),width: parseInt(width.value) } });
@@ -401,7 +441,7 @@ class EditLogoScreen extends Component {
                                 </div>
                                 <div style={{  position: "absolute" }} className="logopreview">
                                 <TextEditWorkspace 
-                                logo ={this.state} handleClick={this.handleClick} handleImageClick={this.handleImageClick} handleDrag={this.handleDrag} handleImageDrag= {this.handleImageDrag} handleImageResize={this.handleImageResize} setFocus={this.setFocus}/>
+                                logo ={this.state} handleClick={this.handleClick} handleImageClick={this.handleImageClick} handleDrag={this.handleDrag} handleImageDrag= {this.handleImageDrag} handleImageResize={this.handleImageResize} removeFocus={this.removeFocus} setFocus={this.setFocus}/>
                                 </div>
                              </div>
                             )}

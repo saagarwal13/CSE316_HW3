@@ -4,7 +4,11 @@ import { Mutation } from "react-apollo";
 import { Link } from 'react-router-dom';
 import  TextEditWorkspace   from "./TextEditWorkspace.js";
 import  EditLogoScreen from "./EditLogoScreen";
+import { Rnd } from 'react-rnd';
 
+
+
+var download = require('download-file')
 const ADD_LOGO = gql`
     mutation AddLogo(
         $text: String!,
@@ -49,8 +53,8 @@ class CreateLogoScreen extends Component {
         texts: [{id:1, title:"GologoLo",fontSize: 20, color:"#FF0000",xpos:5,ypos:5} ],
         images:[],
         text: "GologoLo ",
-        color: "	#000000",
-        fontSize: 10,
+        color: "	#FF0000",
+        fontSize: 20,
         backgroundColor: "#000000",
         borderColor: "#000000",
         borderRadius: 0,
@@ -65,7 +69,9 @@ class CreateLogoScreen extends Component {
         highestimgid:1,
         urlval: "",
         highestypos:5,
-        highestimgypos:5
+        highestimgypos:5,
+        imageHeight:5,
+        imageWidth:5
 
         
     }
@@ -144,12 +150,17 @@ class CreateLogoScreen extends Component {
     }
     handleAddImage = () =>
     {
+       
+ 
+
         
         var newhighestid = this.state.highestid + 1
         var newhighestimgypos= this.state.highestimgypos + 20
-        const newimg = {id:newhighestid, url: this.state.urlval,height:20, width:20,xpos:5,ypos:newhighestimgypos}
+        const newimg = {id:newhighestid, url: this.state.urlval,height:80, width:80,xpos:5,ypos:newhighestimgypos}
         this.setState({highestid:newhighestid,highestimgypos: newhighestimgypos})
         this.setState({images:[...this.state.images,newimg]})
+
+
     }
     handleRemoveImage = ()=>
     {
@@ -168,8 +179,10 @@ class CreateLogoScreen extends Component {
         this.setState({texts:[...this.state.texts.filter(tex=>tex.id!== this.state.focus)]});
         
     }
-    handleClick=(text)=>
+    handleClick=(text)=>  
     {
+        console.log("changing focus")
+       
         this.setState(state => ({
             ...state,
             focus: text.id,fontSize: text.fontSize ,text: text.title,color: text.color
@@ -179,7 +192,11 @@ class CreateLogoScreen extends Component {
     }
     handleImageClick= (image)=>
     {
-        this.setState({focus: image.id})
+        
+        this.setState(state => ({
+            ...state,
+            focus: image.id,imageHeight: image.height ,imageWidth: image.width
+        }));  
     }
 
     handleDrag=(texts)=>
@@ -187,6 +204,7 @@ class CreateLogoScreen extends Component {
         this.setState({texts:texts})
         
     }
+
 
     handleImageDrag=(images)=>
     {
@@ -197,11 +215,29 @@ class CreateLogoScreen extends Component {
     {
         this.setState({images:images})
     }
-    setFocus=(text)=>
+    handleImageHeight=(event)=>
     {
-        this.setState({focus:text.id})
-        console.log(text.id)
+        this.setState({ images: this.state.images.map(imge=>{if(imge.id==this.state.focus){
+            imge.height = parseInt(event.target.value)
+       }
+   return imge }),imageHeight:event.target.value
+       
+       });
+
     }
+    handleImageWidth=(event)=>
+    {
+        this.setState({ images: this.state.images.map(imge=>{if(imge.id==this.state.focus){
+            imge.width = parseInt(event.target.value)
+       }
+   return imge }),imageWidth:event.target.value
+       
+       });
+
+    }
+   
+
+   
 
 
 
@@ -221,30 +257,42 @@ class CreateLogoScreen extends Component {
                         <div className="panel panel-default">
                             <div className="panel-heading">
                                 <h4><Link to="/">Home 🏠</Link></h4>
-                                <div>
-                            <button style={{ backgroundColor: "darkcyan" ,fontSize: 25}} onClick={this.handleAddText}>Add text</button>
-                            </div>
-                            <div>
-                            <button style={{ backgroundColor: "darkcyan" ,fontSize: 25}} onClick={this.handleRemoveText}>Remove text</button>
-                            </div>
 
-                        
-                         <label>
-                                Image Url:
-                          <input type="text" value={this.state.urlval} onChange={this.handleUrlval} />
-                          </label>
-                           <button onClick= {this.handleAddImage } />
-                           <div>
-                            <button style={{ backgroundColor: "darkcyan" ,fontSize: 25}} onClick={this.handleRemoveImage}>Remove Image</button>
-                            </div>
-  
-                            
-
-                                <h3 style={{ paddingLeft: 20, fontWeight: "bold"}} className="panel-title">
+                                <h3 style={{ paddingLeft: 20, paddingTop:10, fontWeight: "bold", marginLeft:110}} className="panel-title">
                                     Create Logo
                                     
                             </h3>
-                            
+
+                          <div  style={{backgroundColor: "thistle",borderStyle: "solid", borderColor: "white", borderRadius:25, paddingLeft: 15, paddingRight:5,paddingTop: 20,paddingBottom:30,width:500}}>
+                            <div style={{marginLeft: 20}}>
+                              <button style={{ backgroundColor: "darkcyan" ,fontSize: 20 }} onClick={this.handleAddText}>Add text</button>
+                              <button style={{ backgroundColor: "darkcyan" ,fontSize: 20,marginLeft: 180}} onClick={this.handleRemoveText}>Remove text</button>     
+                            </div>
+                            <div style={{marginLeft: 20, marginTop:10}}>
+                                <button style={{ backgroundColor: "darkcyan" ,fontSize: 20}} onClick={this.handleAddImage}>Add Image</button>
+                                <input type="text" value={this.state.urlval} onChange={this.handleUrlval} style={{width:100}}placeholder = "Enter URL" />
+                                <button style={{ backgroundColor: "darkcyan" ,fontSize: 20, marginLeft:50}} onClick={this.handleRemoveImage}>Remove Image</button>     
+                         </div>
+                          </div>
+
+                          <div style={{backgroundColor: "thistle",borderStyle: "solid", borderColor: "white", borderRadius:25, paddingLeft: 15, paddingRight:5,paddingTop: 20,paddingBottom:30,width:500}}>
+                          <form class="range-field my-4 w-25">
+                          <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="text"> Image Height:</label>
+                         <input onChange={this.handleImageHeight} value={this.state.imageHeight} type="range" min="5" max="400" />
+                        </form>
+
+                        <form class="range-field my-4 w-25">
+                        <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="text"> Image Width:</label>
+                         <input onChange={this.handleImageWidth} value={this.state.imageWidth} type="range" min="0" max="400"   />
+                        </form>
+
+
+
+                          </div>
+                               
+                
+
+
                             </div>
                             
                             
@@ -341,9 +389,12 @@ class CreateLogoScreen extends Component {
                             </div>
                         </div>
                     </div>
-                    <div  style={{  position: "absolute" }}  className="logopreview">
-                         <TextEditWorkspace 
-                        logo ={this.state} handleClick={this.handleClick} handleImageClick={this.handleImageClick} handleDrag={this.handleDrag} handleImageDrag={this.handleImageDrag} handleImageResize={this.handleImageResize}/>
+                    
+                    <div  style={{  position: "absolute" }}  className="logopreview"  >
+                    <TextEditWorkspace 
+                   logo ={this.state} handleClick={this.handleClick} handleImageClick={this.handleImageClick} handleDrag={this.handleDrag} handleImageDrag={this.handleImageDrag} handleImageResize={this.handleImageResize}/>
+                    
+
                     </div>
                 </div>
                 )}
@@ -353,3 +404,4 @@ class CreateLogoScreen extends Component {
 }
 
 export default CreateLogoScreen;
+

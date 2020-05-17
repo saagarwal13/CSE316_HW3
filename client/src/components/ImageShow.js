@@ -4,15 +4,15 @@ import { Rnd } from 'react-rnd';
 
 class   ImageShow extends Component {
 
-    onDragStart = (e) => {
+    onResizeStart = (e) => {
         e.stopPropagation();
     }
 
     
 
     onDragStop = (e, data) => {
-        e.stopPropagation();
-        e.preventDefault();
+        //e.stopPropagation();
+        //e.preventDefault();
 
     
         
@@ -24,6 +24,7 @@ class   ImageShow extends Component {
         
     }
     onResizeStop = (e, dir, refToElement, delta, position) => {
+
         let images = this.props.images;
         images.forEach(img => {
             if (img.id === this.props.focus) {
@@ -55,16 +56,16 @@ class   ImageShow extends Component {
                 height: this.props.image.height,
             }}
             enableResizing={{
-                top: false, right: false, bottom: false, left: false,
+                top: true, right: true, bottom: false, left: false,
                 topRight: true, bottomRight: true, bottomLeft: true, topLeft: true
             }}
-            onDragStop={this.onDragStop} onDragStart={this.onDragStart}
-            onResizeStart={this.onResizeStart} onResizeStop={this.onResizeStop}
+            onDragStop={this.onDragStop} onDragStart={this.props.handleImageClick.bind(this,this.props.image)}
+             onResizeStart= {this.onResizeStart} onResizeStop={this.onResizeStop}
              >
-                 <div  className="moveable" style={{ 
-                 top: this.props.image.ypos, left: this.props.image.xpos, height: this.props.image.height,width:this.props.image.width}} >
+                 <div   style={{ 
+                 top: this.props.image.ypos, left: this.props.image.xpos, height: this.props.image.height  ,width: this.props.image.width  }} >
                  
-               <img onClick={this.props.handleImageClick.bind(this,this.props.image)} src= {this.props.image.url} alt=""
+               <img height="100%" width="100%" src= {this.props.image.url} alt=""
                />
                  </div>
 

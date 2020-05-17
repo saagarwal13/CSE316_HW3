@@ -9,6 +9,13 @@ const GET_LOGOS = gql`
     logos {
       _id
       text
+      texts
+      {
+          title 
+          id
+          fontSize
+          color
+      }
       lastUpdate
     }
   }
@@ -35,10 +42,7 @@ class HomeScreen extends Component {
                     if (error) return `Error! ${error.message}`;
 
                     {data.logos= data.logos.sort((a, b) => b.lastUpdate > a.lastUpdate)}
-                    //console.log(typeof(data.logos[1].lastUpdate))
-                   // console.log(data.logos[1].lastUpdate);
-                    //console.log(data.logos);
-                    //{data.logos.sort(this.sortingorder)}
+                    
                     return (
                         <div  className="container row">
                             <div style={{ padding: 20}} className="col s4">
