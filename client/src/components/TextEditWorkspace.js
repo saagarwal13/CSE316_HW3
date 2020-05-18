@@ -5,6 +5,9 @@ import { Rnd } from 'react-rnd';
 
 // THIS IS HOW WE DISPLAY THE LOGO, IN THIS COMPONENT
 class TextEditWorkspace extends Component {
+
+   
+    
     
 
 

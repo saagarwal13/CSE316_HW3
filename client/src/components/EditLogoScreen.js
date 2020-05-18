@@ -189,6 +189,8 @@ class EditLogoScreen extends Component {
         this.setState({texts:[...this.state.texts,newText]})
       
     }
+
+
     handleAddImage  = ()=>
     {
       
@@ -284,24 +286,31 @@ class EditLogoScreen extends Component {
     }
     handleDownload=()=>
   {
-    //html2canvas(document.querySelector("#capture")).then(canvas => {
-      //document.body.appendChild(canvas)
-
-     /* const input = document.getElementById('capture');
-      html2canvas(input)
-        .then((canvas) => {
-          const imgData = canvas.toDataURL('image/png');
-
-          window.open(imgData , "_blank");
-        })
-      ;*/
-      domtoimage.toJpeg(document.getElementById('capture'), { quality: 0.95 })
+    
+    domtoimage.toJpeg(document.getElementById('capture'), { quality: 0.95 })
     .then(function (dataUrl) {
         var link = document.createElement('a');
         link.download = 'my-image-name.jpeg';
         link.href = dataUrl;
         link.click();
-    });
+    })
+
+  }
+  bringToTop=()=>
+  {
+      var elementarr= this.state.texts.filter(text=> text.id == this.state.focus)
+      var elem = elementarr.pop()
+      var newarray = this.state.texts.filter(text=> text.id != this.state.focus)
+       newarray.push(elem)
+
+      console.log(newarray)
+
+      this.setState({texts:newarray})
+
+  }
+
+  bringToBottom=()=>
+  {
 
   }
  
@@ -380,21 +389,26 @@ class EditLogoScreen extends Component {
                           <div style={{backgroundColor: "thistle",borderStyle: "solid", borderColor: "white", borderRadius:25, paddingLeft: 15, paddingRight:5,paddingTop: 20,paddingBottom:30,width:500}}>
                           <h3 style={{fontWeight: "bold" , fontStyle: "italic", fontSize: 20, marginLeft:170}}>Text Controls</h3>
                 <div style={{ align: "middle" }} >
-                                        <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="text">Text:</label>
-                                        <input style={{ position: "center" }} onChange={this.handleTextChange} style={{ width:400}} type="text" required className="form-control" name="text" 
+                                        <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16,marginLeft:10}} htmlFor="text">Text:</label>
+                                        <input style={{ position: "center",marginLeft:15 }} onChange={this.handleTextChange} style={{ width:400,marginLeft:15}} type="text" required className="form-control" name="text" 
                                             placeholder="Text" value={this.state.text}/>
                                     </div>
                                     <div >
-                                        <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}}htmlFor="color">Color:</label>
-                                        <input onChange={this.handleTextColorChange} style={{ width:400}} type="color" required className="form-control" name="color" 
+                                        <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16,marginLeft:10}}htmlFor="color">Color:</label>
+                                        <input onChange={this.handleTextColorChange} style={{ width:400,marginLeft:15}} type="color" required className="form-control" name="color" 
                                          placeholder="Color" value={this.state.color} />
                                     </div>
                                     <div >
-                                        <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="fontSize">Font Size:</label>
-                                        <input onChange={this.handleFontSizeChange} style={{ width:400}} type="number" required min="5" max="200"className="form-control" name="fontSize" 
+                                        <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16,marginLeft:10}} htmlFor="fontSize">Font Size:</label>
+                                        <input onChange={this.handleFontSizeChange} style={{ width:400,marginLeft:15}} type="number" required min="5" max="200"className="form-control" name="fontSize" 
                                              placeholder="Font Size" value={this.state.fontSize} />
                                     </div>
-                </div>
+
+                                    <button style={{ backgroundColor: "darkcyan" ,fontSize: 20, marginLeft:70, marginTop:7}} onClick={this.bringToTop}>Bring to Top</button>
+                                    <button style={{ backgroundColor: "darkcyan" ,fontSize: 20, marginLeft:10}} onClick={this.bringToBottom}>Bring to bottom </button>
+
+
+                       </div>
                                         </div>
                                         <div style={{ backgroundColor: "Lavender", position: "absolute", marginLeft:50, borderStyle: "solid", borderColor: "white", paddingLeft: 30, paddingRight: 30, paddingTop: 20 }} className="panel-body">                                            
                                             <form onSubmit={e => {
