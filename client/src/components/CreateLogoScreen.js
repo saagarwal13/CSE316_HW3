@@ -13,9 +13,8 @@ const ADD_LOGO = gql`
     mutation AddLogo(
         $text: String!,
         $texts: [LogoText]!,
+        $logoTitle: String!
         $images: [ImageText]!
-        $color: String!,
-        $fontSize: Int!,
         $backgroundColor: String!,
         $borderRadius: Int!,
         $borderWidth: Int!
@@ -30,9 +29,8 @@ const ADD_LOGO = gql`
         addLogo(
             text: $text,
             texts: $texts,
+            logoTitle: $logoTitle,
             images: $images,
-            color: $color,
-            fontSize: $fontSize,
             backgroundColor: $backgroundColor,
             borderRadius: $borderRadius,
             borderWidth: $borderWidth,
@@ -50,13 +48,13 @@ const ADD_LOGO = gql`
 
 class CreateLogoScreen extends Component {
     state = {
-        texts: [{id:1, title:"GologoLo",fontSize: 20, color:"#FF0000",xpos:5,ypos:5} ],
+        texts: [{id:1, title:"GologoLo",fontSize: 20, color:"#FF0000",xpos:15,ypos:20} ],
         images:[],
         text: "GologoLo ",
         color: "	#FF0000",
         fontSize: 20,
         backgroundColor: "#000000",
-        borderColor: "#000000",
+        borderColor: "#FF0000"	,
         borderRadius: 0,
         borderWidth: 0,
         padding: 5,
@@ -68,10 +66,12 @@ class CreateLogoScreen extends Component {
         highestid: 1,
         highestimgid:1,
         urlval: "",
-        highestypos:5,
+        highestypos:20,
         highestimgypos:5,
         imageHeight:5,
-        imageWidth:5
+        imageWidth:5,
+        textval: "",
+        logoTitle: ""
 
         
     }
@@ -85,6 +85,13 @@ class CreateLogoScreen extends Component {
     return tex }),fontSize:event.target.value
         
         });
+
+    }
+
+    handleLogoTitle =(event) =>
+    {
+        this.setState({logoTitle: event.target.value})
+
 
     }
     handleTextChange = (event) => {
@@ -143,7 +150,7 @@ class CreateLogoScreen extends Component {
          var newhighestid= this.state.highestid + 1
          var newhighestypos= this.state.highestypos + 20
 
-        const newText = {id:newhighestid, title:"GologoLo",fontSize: 20, color:"#FF0000", xpos: 5, ypos: newhighestypos}
+        const newText = {id:newhighestid, title: this.state.textval,fontSize: 20, color:"#FF0000", xpos: 20, ypos: newhighestypos}
         this.setState({highestid:newhighestid,highestypos: newhighestypos})
         
         this.setState({texts:[...this.state.texts,newText] },()=>console.log(this.state))
@@ -172,6 +179,11 @@ class CreateLogoScreen extends Component {
     handleUrlval=(event)=>
     {    console.log(" url ")
         this.setState({urlval: event.target.value})
+        
+    }
+    handleTextVal=(event)=>
+    {    console.log(" url ")
+        this.setState({textval: event.target.value})
         
     }
     handleRemoveText = ()=>
@@ -235,6 +247,35 @@ class CreateLogoScreen extends Component {
        });
 
     }
+    bringToTop=()=>
+  {
+      console.log(this.state.texts)
+      var elementarr= this.state.texts.filter(text=> text.id == this.state.focus)
+      var elem = elementarr.pop()
+      var newarray = this.state.texts.filter(text=> text.id != this.state.focus)
+      console.log(this.state.texts)
+       
+      newarray.push(elem)
+
+      console.log(newarray)
+
+      
+
+      this.setState({texts:newarray})
+
+  }
+
+  bringToBottom=()=>
+  {
+    var elementarr= this.state.texts.filter(text=> text.id == this.state.focus)
+    var elem = elementarr.pop()
+    var newarray = this.state.texts.filter(text=> text.id != this.state.focus)
+    newarray.unshift(elem)
+
+    this.setState({texts:newarray})
+
+  }
+ 
    
 
    
@@ -262,34 +303,42 @@ class CreateLogoScreen extends Component {
                                     Create Logo
                                     
                             </h3>
+                            <label style={{ fontSize: 20,fontWeight: "bold", fontStyle: "italic",marginLeft:30}}>Enter a logo title:</label>
+                            <input type="text" style={{marginLeft:15, paddingLeft:30}} value={this.state.logoTitle} onChange={this.handleLogoTitle} style={{width:200}} required placeholder = "Logo Title" />
 
                           <div  style={{backgroundColor: "thistle",borderStyle: "solid", borderColor: "white", borderRadius:25, paddingLeft: 15, paddingRight:5,paddingTop: 10,paddingBottom:10,width:500}}>
                             <div style={{marginLeft: 20}}>
-                              <button style={{ backgroundColor: "darkcyan" ,fontSize: 18,borderRadius:5 }} onClick={this.handleAddText}>Add text</button>
-                              <button style={{ backgroundColor: "darkcyan" ,fontSize: 18,marginLeft: 180,borderRadius:5}} onClick={this.handleRemoveText}>Remove text</button>     
+                              <button style={{ backgroundColor: "darkcyan" ,fontSize: 18,borderRadius:5 ,marginLeft:10}} onClick={this.handleAddText}>Add text</button>
+                              <input type="text" value={this.state.texval} onChange={this.handleTextVal} style={{width:100}}placeholder = "Enter Title" />
+                              <button style={{ backgroundColor: "darkcyan" ,fontSize: 18,marginLeft: 80,borderRadius:5}} onClick={this.handleRemoveText}>Remove text</button>     
                             </div>
                             <div style={{marginLeft: 20, marginTop:10}}>
                                 <button style={{ backgroundColor: "darkcyan" ,fontSize: 18,borderRadius:2}} onClick={this.handleAddImage}>Add Image</button>
                                 <input type="text" value={this.state.urlval} onChange={this.handleUrlval} style={{width:100}}placeholder = "Enter URL" />
-                                <button style={{ backgroundColor: "darkcyan" ,fontSize: 18, marginLeft:50,borderRadius:5}} onClick={this.handleRemoveImage}>Remove Image</button>     
+                                <button style={{ backgroundColor: "darkcyan" ,fontSize: 18, marginLeft:60,borderRadius:5}} onClick={this.handleRemoveImage}>Remove Image</button>     
                          </div>
                           </div>
 
                           <div style={{backgroundColor: "thistle",borderStyle: "solid", borderColor: "white", borderRadius:25, paddingLeft: 15, paddingRight:5,width:500}}>
-                              <h3 style={{fontWeight: "bold" , fontStyle: "italic", fontSize: 20, marginLeft:170, marginTop:15}}>Image Controls</h3>
-                          <form class="range-field my-4 w-25">
+                              <h3 style={{fontWeight: "bold" , fontStyle: "italic", fontSize: 20, marginLeft:155, marginTop:15}}>Image Controls</h3>
+                         
                               <div>
-                              <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="text"> Image Height:</label>
+                                  <div>
+                                  <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="text"> Image Height:</label>
+                              <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16, marginLeft:190}} htmlFor="text"> Image Width:</label>
+
+                                  </div>
+
+                             
                          <input onChange={this.handleImageHeight} value={this.state.imageHeight} type="range" min="5" max="400" />
+             
+                         <input onChange={this.handleImageWidth} style={{marginLeft:60}} value={this.state.imageWidth} type="range" min="0" max="400"   />
 
                               </div>
                          
-                        </form>
+  
 
-                        <form class="range-field my-4 w-25">
-                        <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="text"> Image Width:</label>
-                         <input onChange={this.handleImageWidth} value={this.state.imageWidth} type="range" min="0" max="400"   />
-                        </form>
+                        
                           </div>
                                
                 <div style={{backgroundColor: "thistle",borderStyle: "solid", borderColor: "white", borderRadius:25, paddingLeft: 15, paddingRight:5,paddingTop: 20,paddingBottom:30,width:500}}>
@@ -309,30 +358,49 @@ class CreateLogoScreen extends Component {
                                         <input onChange={this.handleFontSizeChange} style={{ width:400}} type="number" required min="5" max="200"className="form-control" name="fontSize" 
                                              placeholder="Font Size" value={this.state.fontSize} />
                                     </div>
+                                    <button style={{ backgroundColor: "darkcyan" ,fontSize: 20, marginLeft:70, marginTop:7}} onClick={this.bringToTop}>Bring to Top</button>
+                                    <button style={{ backgroundColor: "darkcyan" ,fontSize: 20, marginLeft:10}} onClick={this.bringToBottom}>Bring to bottom </button>
                 </div>
 
 
                             </div>
                             
                             
-                            <div  style={{ backgroundColor: "Lavender", position: "absolute",borderStyle: "solid", borderColor: "white", paddingLeft: 30, paddingRight: 30,paddingTop: 20 }} className="panel-body">
+                            <div  style={{ backgroundColor: "Lavender", position: "absolute",borderStyle: "solid", borderColor: "white", paddingLeft: 60, paddingRight: 30,paddingTop: 20 }} className="panel-body">
                                 
                                 <form onSubmit={e => {
                                     e.preventDefault();
+                                    try {
+                                        if(this.state.logoTitle != "")
+                                        {
+                                            addLogo({ variables: { text: this.state.text,logoTitle: this.state.logoTitle,texts: this.state.texts,images: this.state.images,backgroundColor: backgroundColor.value,borderRadius: parseInt(borderRadius.value), borderWidth: parseInt(borderWidth.value), borderColor: borderColor.value ,padding: parseInt(padding.value),margin: parseInt(margin.value),height: parseInt(height.value),width: parseInt(width.value)} });
+    
+                                        }
+                                        else
+                                        {
+                                            alert('Please Enter a name for your logo !')
+                                        }
+
+                                        
+                                       } catch (e) {
+                                        alert('I will not submit')
+                                       }
+                                       
+         
                                     
-                                    addLogo({ variables: { text: this.state.text,texts: this.state.texts,images: this.state.images, color: this.state.color, fontSize: parseInt(this.state.fontSize),backgroundColor: backgroundColor.value,borderRadius: parseInt(borderRadius.value), borderWidth: parseInt(borderWidth.value), borderColor: borderColor.value ,padding: parseInt(padding.value),margin: parseInt(margin.value),height: parseInt(height.value),width: parseInt(width.value)} });
+                                   // addLogo({ variables: { text: this.state.text,logoTitle: this.state.logoTitle,texts: this.state.texts,images: this.state.images,backgroundColor: backgroundColor.value,borderRadius: parseInt(borderRadius.value), borderWidth: parseInt(borderWidth.value), borderColor: borderColor.value ,padding: parseInt(padding.value),margin: parseInt(margin.value),height: parseInt(height.value),width: parseInt(width.value)} });
                                     //text.value = "";
                                     //texts.value=""
                                     //color.value = "";
                                     //fontSize.value = "";
-                                    backgroundColor.value="";
-                                    borderRadius.value="";
-                                    borderWidth.value="";
-                                    borderColor.value="";
-                                    padding.value="";
-                                    margin.value="";
-                                    height.value= "";
-                                    width.value= "";
+                                    //backgroundColor.value="";
+                                    //borderRadius.value="";
+                                    //borderWidth.value="";
+                                    //borderColor.value="";
+                                    //padding.value="";
+                                    //margin.value="";
+                                    //height.value= "";
+                                    //width.value= "";
                                     
                                    
                                 }}>

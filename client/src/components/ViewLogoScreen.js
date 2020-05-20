@@ -12,6 +12,7 @@ const GET_LOGO = gql`
     logo(id: $logoId) {
       _id
       text
+      logoTitle
       texts {
         id
         fontSize
@@ -31,8 +32,7 @@ const GET_LOGO = gql`
         width
       }
     
-      color
-      fontSize
+      
       backgroundColor
       borderRadius
       borderWidth
@@ -66,24 +66,7 @@ class ViewLogoScreen extends Component {
   }
   handleDownload=()=>
   {
-    //html2canvas(document.querySelector("#capture")).then(canvas => {
-      //document.body.appendChild(canvas)
-
-     /* const input = document.getElementById('capture');
-      html2canvas(input)
-        .then((canvas) => {
-          const imgData = canvas.toDataURL('image/png');
-
-          window.open(imgData , "_blank");
-        })
-      ;*/
-      domtoimage.toJpeg(document.getElementById('capture'), { quality: 0.95 })
-    .then(function (dataUrl) {
-        var link = document.createElement('a');
-        link.download = 'my-image-name.jpeg';
-        link.href = dataUrl;
-        link.click();
-    });
+    
  
 
   }
@@ -113,6 +96,8 @@ class ViewLogoScreen extends Component {
                   </div>
                   <div style={{ backgroundColor: "#dbdbf0" , position: "relative", width: 450 ,borderStyle: "solid", borderColor: "white", paddingBottom: 17}} className="panel-body">
                     <dl>
+                    <dt style={{ fontSize: 23, paddingLeft: 80, paddingTop: 20}} > Logo Title:</dt>
+                      <dd style={{ fontSize: 21, paddingLeft: 120}} >{data.logo.logoTitle}</dd>
                       <dt style={{ fontSize: 23, paddingLeft: 80, paddingTop: 20}} > Number of Texts:</dt>
                       <dd style={{ fontSize: 21, paddingLeft: 120}} >{data.logo.texts.length}</dd>
                       <dt style={{ fontSize: 23, paddingLeft: 80}} > Number of Images:</dt>

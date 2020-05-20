@@ -50,7 +50,7 @@ class TextShow extends Component {
                                         //onResizeStart={this.onResizeStart} onResizeStop={this.onResizeStop}
                                          >
                                              <div   className="moveable" style={{fontSize: this.props.text.fontSize + "px" ,color: this.props.text.color, 
-                                             top: this.props.text.ypos, left: this.props.text.xpos}} >
+                                             top: this.props.text.ypos, left: this.props.text.xpos, backgroundColor: this.props.focus == this.props.text.id ? "yellow": "Transparent"}} >
                                              {this.props.text.title}
                                              </div>
 

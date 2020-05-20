@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 
 var LogoSchema = new mongoose.Schema({
   id: String,
+  logoTitle: String,
   text: String,
   texts:[{
     id:{
@@ -17,11 +18,11 @@ var LogoSchema = new mongoose.Schema({
     },
     xpos:
     {
-      type: Number, min: 5, max: 2000 ,
+      type: Number, min: 0, max: 2000 ,
     },
     ypos:
     {
-      type: Number, min: 5, max: 2000 ,
+      type: Number, min: 0, max: 2000 ,
 
     },
     color:
@@ -40,11 +41,11 @@ var LogoSchema = new mongoose.Schema({
     },
     xpos:
     {
-      type: Number, min: 5, max: 2000 ,
+      type: Number, min: 0, max: 2000 ,
     },
     ypos:
     {
-      type: Number, min: 5, max: 2000 ,
+      type: Number, min: 0, max: 2000 ,
 
     },
     height:
@@ -58,8 +59,7 @@ var LogoSchema = new mongoose.Schema({
     },
   }],
  
-  color: String,
-  fontSize: { type: Number, min: 5, max: 200 },
+ 
   backgroundColor:String,
   borderRadius: { type: Number, min: 0, max: 200 },
   borderWidth: { type: Number, min: 0, max: 200 },

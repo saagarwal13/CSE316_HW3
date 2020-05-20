@@ -9,6 +9,7 @@ const GET_LOGOS = gql`
     logos {
       _id
       text
+      logoTitle
       texts
       {
           title 
@@ -51,8 +52,8 @@ class HomeScreen extends Component {
                                 
                                 {data.logos.map((logo, index) => (
                                     <div key={index} className='home_logo_link'
-                                        style={{ cursor: "pointer", fontSize: 27, color: "DarkCyan", textAlign: "center" }}>
-                                        <Link to={`/view/${logo._id}`}>{logo.text}</Link>
+                                        style={{ cursor: "pointer", fontSize: 15, color: "DarkCyan", textAlign: "center" }}>
+                                        <Link to={`/view/${logo._id}`}>{logo.logoTitle}</Link>
                                     </div>
                                 ))}
                             </div >

@@ -17,8 +17,7 @@ class TextEditWorkspace extends Component {
     render() {
         const styles = {
             container: {
-                color: this.props.logo.color,
-                fontSize: this.props.logo.fontSize + "px",
+                
                 backgroundColor: this.props.logo.backgroundColor,
                 borderColor: this.props.logo.borderColor,
                 borderRadius: this.props.logo.borderRadius + "px",
