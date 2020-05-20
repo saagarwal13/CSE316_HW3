@@ -296,6 +296,7 @@ class EditLogoScreen extends Component {
     }
     handleDownload=()=>
   {
+      this.setState({focus:0})
     
     domtoimage.toJpeg(document.getElementById('capture'), { quality: 0.95 })
     .then(function (dataUrl) {
