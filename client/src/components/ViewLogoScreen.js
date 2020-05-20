@@ -11,7 +11,7 @@ const GET_LOGO = gql`
   query logo($logoId: String) {
     logo(id: $logoId) {
       _id
-      text
+    
       logoTitle
       texts {
         id
@@ -84,30 +84,28 @@ class ViewLogoScreen extends Component {
           return (
             <div className= "viewlogo">
               <div id= "logoinfo" className="container ">
-                <div className="panel panel-default">
+                <div style={{marginLeft:100}} className="panel panel-default">
                   <div className="panel-heading">
                     <h4>
                       <Link to="/">Home 🏠</Link>
                     </h4>
-                    <button onClick={this.handleDownload} style={{ fontSize: 25}}  className="btn btn-danger">
-                              Download Logo
-                    </button>
+                   
                     <h3 style={{ paddingLeft: 20, fontWeight: "bold"}} className="panel-title">Logo Information</h3>
                   </div>
-                  <div style={{ backgroundColor: "#dbdbf0" , position: "relative", width: 450 ,borderStyle: "solid", borderColor: "white", paddingBottom: 17}} className="panel-body">
+                  <div style={{ backgroundColor: "#dbdbf0" , position: "relative", width: 510 ,borderStyle: "solid", borderColor: "white", paddingBottom: 17}} className="panel-body">
                     <dl>
                     <dt style={{ fontSize: 23, paddingLeft: 80, paddingTop: 20}} > Logo Title:</dt>
-                      <dd style={{ fontSize: 21, paddingLeft: 120}} >{data.logo.logoTitle}</dd>
+                      <dd style={{ fontSize: 21, paddingLeft: 140}} >{data.logo.logoTitle}</dd>
                       <dt style={{ fontSize: 23, paddingLeft: 80, paddingTop: 20}} > Number of Texts:</dt>
-                      <dd style={{ fontSize: 21, paddingLeft: 120}} >{data.logo.texts.length}</dd>
+                      <dd style={{ fontSize: 21, paddingLeft: 140}} >{data.logo.texts.length}</dd>
                       <dt style={{ fontSize: 23, paddingLeft: 80}} > Number of Images:</dt>
-                      <dd style={{ fontSize: 21, paddingLeft: 120}} >{data.logo.images.length}</dd>
+                      <dd style={{ fontSize: 21, paddingLeft: 140}} >{data.logo.images.length}</dd>
                       <dt style={{ fontSize: 23, paddingLeft: 80}}>Background Color:</dt>
-                      <dd style={{ fontSize: 21, paddingLeft: 120}}>{data.logo.backgroundColor}</dd>
+                      <dd style={{ fontSize: 21, paddingLeft: 140}}>{data.logo.backgroundColor}</dd>
                       <dt style={{ fontSize: 23, paddingLeft: 80}}>Border Radius:</dt>
-                      <dd style={{ fontSize: 21, paddingLeft: 120}}>{data.logo.borderRadius}</dd>
+                      <dd style={{ fontSize: 21, paddingLeft: 140}}>{data.logo.borderRadius}</dd>
                       <dt style={{ fontSize: 23, paddingLeft: 80}}>Border Width:</dt>
-                      <dd style={{ fontSize: 21, paddingLeft: 120}}>{data.logo.borderWidth}</dd>
+                      <dd style={{ fontSize: 21, paddingLeft: 140}}>{data.logo.borderWidth}</dd>
                       
                       <dt style={{ fontSize: 23, paddingLeft: 80}}>Padding:</dt>
                       <dd style={{ fontSize: 21, paddingLeft: 120}}>{data.logo.padding}</dd>
@@ -132,12 +130,12 @@ class ViewLogoScreen extends Component {
                             <Link
                               to={`/edit/${data.logo._id}`}
                               className="btn btn-success"
-                              style={{ fontSize: 25, paddingLeft:20, width:92}}
+                              style={{ fontSize: 30, paddingLeft:20, width:92}}
                             >
                               Edit
                             </Link>
                             &nbsp;
-                            <button style={{ fontSize: 25}}type="submit" className="btn btn-danger">
+                            <button style={{ fontSize: 30,marginLeft:30}}type="submit" className="btn btn-danger">
                               Delete
                             </button>
                           </form>

@@ -3,7 +3,6 @@ var mongoose = require('mongoose');
 var LogoSchema = new mongoose.Schema({
   id: String,
   logoTitle: String,
-  text: String,
   texts:[{
     id:{
       type:Number

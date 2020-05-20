@@ -9,7 +9,7 @@ const GET_LOGO = gql`
     query logo($logoId: String) {
         logo(id: $logoId) {
             _id
-            text
+            
             logoTitle
             texts
             {
@@ -48,7 +48,7 @@ const GET_LOGO = gql`
 const UPDATE_LOGO = gql`
     mutation updateLogo(
         $id: String!,
-        $text: String!,
+        
         $logoTitle: String!,
         $texts:[LogoText]!,
         $images:[ImageText]!
@@ -62,7 +62,7 @@ const UPDATE_LOGO = gql`
         $width: Int!) {
             updateLogo(
                 id: $id,
-                text: $text,
+                
                 logoTitle: $logoTitle
                 texts: $texts,
                 images: $images,             
@@ -372,7 +372,7 @@ class EditLogoScreen extends Component {
                                     Edit Logo
                                     
                             </h3>
-                            <button onClick={this.handleDownload} style={{ fontSize: 25}}  className="btn btn-danger">
+                            <button onClick={this.handleDownload} style={{ fontSize: 20}}  className="btn btn-danger">
                               Download Logo
                              </button>
                              
@@ -393,19 +393,21 @@ class EditLogoScreen extends Component {
                           </div>
 
                           <div style={{backgroundColor: "thistle",borderStyle: "solid", borderColor: "white", borderRadius:25, paddingLeft: 15, paddingRight:5,width:500}}>
-                          <h3 style={{fontWeight: "bold" , fontStyle: "italic", fontSize: 20, marginLeft:180, marginTop:15}}>Image Controls</h3>
-                          <form class="range-field my-4 w-25">
-                          <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="text"> Image Height:</label>
+                              <h3 style={{fontWeight: "bold" , fontStyle: "italic", fontSize: 20, marginLeft:155, marginTop:15}}>Image Controls</h3>
+                         
+                              <div>
+                                  <div>
+                                  <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="text"> Image Height:</label>
+                              <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16, marginLeft:190}} htmlFor="text"> Image Width:</label>
+
+                                  </div>
+
+                             
                          <input onChange={this.handleImageHeight} value={this.state.imageHeight} type="range" min="5" max="400" />
-                        </form>
+             
+                         <input onChange={this.handleImageWidth} style={{marginLeft:60}} value={this.state.imageWidth} type="range" min="5" max="400"   />
 
-                        <form class="range-field my-4 w-25">
-                        <label style={{ fontWeight: "bold" , fontStyle: "italic", fontSize: 16}} htmlFor="text"> Image Width:</label>
-                         <input onChange={this.handleImageWidth} value={this.state.imageWidth} type="range" min="0" max="400"   />
-                        </form>
-
-
-
+                              </div>
                           </div>
                           <div style={{backgroundColor: "thistle",borderStyle: "solid", borderColor: "white", borderRadius:25, paddingLeft: 15, paddingRight:5,paddingTop: 20,paddingBottom:30,width:500}}>
                           <h3 style={{fontWeight: "bold" , fontStyle: "italic", fontSize: 20, marginLeft:170}}>Text Controls</h3>
@@ -425,16 +427,16 @@ class EditLogoScreen extends Component {
                                              placeholder="Font Size" value={this.state.fontSize} />
                                     </div>
 
-                                    <button style={{ backgroundColor: "darkcyan" ,fontSize: 20, marginLeft:70, marginTop:7}} onClick={this.bringToTop}>Bring to Top</button>
-                                    <button style={{ backgroundColor: "darkcyan" ,fontSize: 20, marginLeft:10}} onClick={this.bringToBottom}>Bring to bottom </button>
+                                    <button style={{ backgroundColor: "darkcyan" ,fontSize: 18, marginLeft:80, marginTop:7,borderRadius:6}} onClick={this.bringToTop}>Bring to Top</button>
+                                    <button style={{ backgroundColor: "darkcyan" ,fontSize: 18, marginLeft:10,borderRadius:6}} onClick={this.bringToBottom}>Bring to bottom </button>
 
 
                        </div>
                                         </div>
-                                        <div style={{ backgroundColor: "Lavender", position: "absolute", marginLeft:50, borderStyle: "solid", borderColor: "white", paddingLeft: 30, paddingRight: 30, paddingTop: 20 }} className="panel-body">                                            
+                                        <div style={{ backgroundColor: "Lavender", position: "absolute", borderStyle: "solid", borderColor: "white",width:500,borderRadius:15, paddingLeft: 45, paddingRight: 30, paddingTop: 20 }} className="panel-body">                                            
                                             <form onSubmit={e => {
                                                 e.preventDefault();
-                                                updateLogo({ variables: { id: data.logo._id,  text: this.state.text, logoTitle: this.state.logoTitle,texts: this.state.texts,images: this.state.images,backgroundColor: backgroundColor.value,borderRadius: parseInt(borderRadius.value), borderWidth: parseInt( borderWidth.value), borderColor:borderColor.value,padding: parseInt(padding.value),margin: parseInt(margin.value),height: parseInt(height.value),width: parseInt(width.value) } });
+                                                updateLogo({ variables: { id: data.logo._id, logoTitle: this.state.logoTitle,texts: this.state.texts,images: this.state.images,backgroundColor: backgroundColor.value,borderRadius: parseInt(borderRadius.value), borderWidth: parseInt( borderWidth.value), borderColor:borderColor.value,padding: parseInt(padding.value),margin: parseInt(margin.value),height: parseInt(height.value),width: parseInt(width.value) } });
                                                 //text.value = "";
                                                 
                                                 //color.value = "";

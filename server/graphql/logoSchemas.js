@@ -164,9 +164,7 @@ var logoType = new GraphQLObjectType({
 
             },
            
-            text: {
-                type: GraphQLString
-            },
+           
             
             backgroundColor: {
                 type: GraphQLString
@@ -240,9 +238,7 @@ var mutation = new GraphQLObjectType({
             addLogo: {
                 type: logoType,
                 args: {
-                    text: {
-                        type: new GraphQLNonNull(GraphQLString)
-                    },
+                   
                     logoTitle:
                     {
                         type: new GraphQLNonNull(GraphQLString)
@@ -301,9 +297,7 @@ var mutation = new GraphQLObjectType({
                         name: 'id',
                         type: new GraphQLNonNull(GraphQLString)
                     },
-                    text: {
-                        type: new GraphQLNonNull(GraphQLString)
-                    },
+                   
                     logoTitle: {
                         type: new GraphQLNonNull(GraphQLString)
                     },

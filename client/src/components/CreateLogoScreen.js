@@ -11,7 +11,7 @@ import { Rnd } from 'react-rnd';
 var download = require('download-file')
 const ADD_LOGO = gql`
     mutation AddLogo(
-        $text: String!,
+        
         $texts: [LogoText]!,
         $logoTitle: String!
         $images: [ImageText]!
@@ -27,7 +27,7 @@ const ADD_LOGO = gql`
         
         ) {
         addLogo(
-            text: $text,
+            
             texts: $texts,
             logoTitle: $logoTitle,
             images: $images,
@@ -48,7 +48,7 @@ const ADD_LOGO = gql`
 
 class CreateLogoScreen extends Component {
     state = {
-        texts: [{id:1, title:"GologoLo",fontSize: 20, color:"#FF0000",xpos:15,ypos:20} ],
+        texts: [{id:1, title:"GologoLo",fontSize: 20, color:"#FF0000",xpos:100,ypos:200} ],
         images:[],
         text: "GologoLo ",
         color: "	#FF0000",
@@ -309,12 +309,12 @@ class CreateLogoScreen extends Component {
                           <div  style={{backgroundColor: "thistle",borderStyle: "solid", borderColor: "white", borderRadius:25, paddingLeft: 15, paddingRight:5,paddingTop: 10,paddingBottom:10,width:500}}>
                             <div style={{marginLeft: 20}}>
                               <button style={{ backgroundColor: "darkcyan" ,fontSize: 18,borderRadius:5 ,marginLeft:10}} onClick={this.handleAddText}>Add text</button>
-                              <input type="text" value={this.state.texval} onChange={this.handleTextVal} style={{width:100}}placeholder = "Enter Title" />
+                              <input type="text" value={this.state.texval} onChange={this.handleTextVal} style={{width:100}} required placeholder = "Enter text" />
                               <button style={{ backgroundColor: "darkcyan" ,fontSize: 18,marginLeft: 80,borderRadius:5}} onClick={this.handleRemoveText}>Remove text</button>     
                             </div>
                             <div style={{marginLeft: 20, marginTop:10}}>
                                 <button style={{ backgroundColor: "darkcyan" ,fontSize: 18,borderRadius:2}} onClick={this.handleAddImage}>Add Image</button>
-                                <input type="text" value={this.state.urlval} onChange={this.handleUrlval} style={{width:100}}placeholder = "Enter URL" />
+                                <input type="text" value={this.state.urlval} onChange={this.handleUrlval} style={{width:100}} required placeholder = "Enter URL" />
                                 <button style={{ backgroundColor: "darkcyan" ,fontSize: 18, marginLeft:60,borderRadius:5}} onClick={this.handleRemoveImage}>Remove Image</button>     
                          </div>
                           </div>
@@ -332,13 +332,9 @@ class CreateLogoScreen extends Component {
                              
                          <input onChange={this.handleImageHeight} value={this.state.imageHeight} type="range" min="5" max="400" />
              
-                         <input onChange={this.handleImageWidth} style={{marginLeft:60}} value={this.state.imageWidth} type="range" min="0" max="400"   />
+                         <input onChange={this.handleImageWidth} style={{marginLeft:60}} value={this.state.imageWidth} type="range" min="5" max="400"   />
 
                               </div>
-                         
-  
-
-                        
                           </div>
                                
                 <div style={{backgroundColor: "thistle",borderStyle: "solid", borderColor: "white", borderRadius:25, paddingLeft: 15, paddingRight:5,paddingTop: 20,paddingBottom:30,width:500}}>
@@ -373,7 +369,7 @@ class CreateLogoScreen extends Component {
                                     try {
                                         if(this.state.logoTitle != "")
                                         {
-                                            addLogo({ variables: { text: this.state.text,logoTitle: this.state.logoTitle,texts: this.state.texts,images: this.state.images,backgroundColor: backgroundColor.value,borderRadius: parseInt(borderRadius.value), borderWidth: parseInt(borderWidth.value), borderColor: borderColor.value ,padding: parseInt(padding.value),margin: parseInt(margin.value),height: parseInt(height.value),width: parseInt(width.value)} });
+                                            addLogo({ variables: { logoTitle: this.state.logoTitle,texts: this.state.texts,images: this.state.images,backgroundColor: backgroundColor.value,borderRadius: parseInt(borderRadius.value), borderWidth: parseInt(borderWidth.value), borderColor: borderColor.value ,padding: parseInt(padding.value),margin: parseInt(margin.value),height: parseInt(height.value),width: parseInt(width.value)} });
     
                                         }
                                         else
